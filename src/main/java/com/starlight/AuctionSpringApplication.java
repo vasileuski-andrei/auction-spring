@@ -1,4 +1,4 @@
-package com.starlight.auctionspring;
+package com.starlight;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.starlight.auctionspring;
+package com.starlight;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
