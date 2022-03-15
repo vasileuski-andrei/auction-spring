@@ -1,16 +1,30 @@
 package com.starlight.controller;
 
+import com.starlight.model.Lot;
+import com.starlight.service.LotService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/market")
 public class MarketController {
 
+    private final LotService lotService;
+
+    @Autowired
+    public MarketController(LotService lotService) {
+        this.lotService = lotService;
+    }
+
     @GetMapping
-    public String getMarketPage() {
+    public String getMarketPage(Model model) {
+        List<Lot> lots = lotService.getAll();
+        model.addAttribute("lots", lots);
         return "market";
     }
 }

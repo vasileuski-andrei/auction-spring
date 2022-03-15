@@ -32,49 +32,22 @@
                         <th>STATUS</th>
                         <th>TIME LEFT</th>
                     </tr>
-                    <c:forEach var="lot" items="${requestScope.lots}">
-                        <tr>
-                            <td>${lot.id}</td>
-<!--                            <td><a href="${pageContext.request.contextPath}/lot?lotId=${t.owner}">${lot.lotName}</a></td>-->
-                            <td>${lot.owner}</td>
-                            <td>${lot.startBid} $</td>
-                            <c:choose>
-                                <c:when test="${lot.lastBid != 'null'}">
-                                    <td>
-                                        <div>${lot.lastBid} $</div>
-                                        <div class="name-of-user-in-last-bid-column">${lot.userWhoMadeLastBid}</div>
 
-                                    </td>
+                        <tr th:each="lot : ${lots}">
+                            <td th:text="${lot.id}"></td>
+                            <td th:text="${lot.lotName}"></td>
+                            <td th:text="${lot.lotOwner}"></td>
+                            <td th:text="${lot.startBid}"></td>
+                            <td> - </td>
+                            <td th:switch="${lot.statusId}">
+                                <span class="lot-status-sell" th:case="1">SELL</span>
+                                <span class="lot-status-sold" th:case="2">SOLD</span>
+                                <span class= "lot-status-not-sold" th:case="3">NOT SOLD</span>
+                            </td>
+                            <td> - </td>
 
-                                </c:when>
-                                <c:otherwise>
-                                    <td>-</td>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:choose>
-                                <c:when test="${lot.lotStatus eq 'SOLD'}">
-                                    <td><span class="lot-status-sold">${lot.lotStatus}</span></td>
-                                </c:when>
-                                <c:when test="${lot.lotStatus eq 'NOT_SOLD'}">
-                                    <td><span class="lot-status-not-sold">NOT SOLD</span></td>
-                                </c:when>
-                                <c:otherwise>
-                                    <td><span class="lot-status-sell">${lot.lotStatus}</span></td>
-                                </c:otherwise>
-                            </c:choose>
-                            <td>${lot.time}</td>
                         </tr>
-                    </c:forEach>
-                    <c:if test="${not empty requestScope.errors}">
-                        <div>
-                            <c:forEach var="error" items="${requestScope.errors}">
-                                <ul>
-                                    <li><span class="alert-message">${error.message}</span></li>
-                                </ul>
 
-                            </c:forEach>
-                        </div>
-                    </c:if>
                 </table>
             </div>
 
