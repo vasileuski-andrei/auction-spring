@@ -1,5 +1,6 @@
 package com.starlight.model;
 
+import com.starlight.util.LocalDateTimeConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,11 +18,12 @@ import java.time.LocalDate;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
+    @Column(unique = true, nullable = false)
     private String username;
+//    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDate birthDate;
     private String email;
     private String password;
-    private int roleId;
 
 }

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/css/util.css}"/>
+    <link rel="stylesheet" th:href="@{/css/normalize.css}"/>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <header th:replace="header :: content"></header>
+
+    <div class="content-wrapper">
+
+        <aside class="aside"><a href="#">About us</a><a href="#">Delivery</a><a href="#">FAQ</a></aside>
+
+        <div class="first-section">
+
+            <div class="wrap-login100 p-t-50 p-b-90">
+                <form class="login100-form validate-form flex-sb flex-w" th:method="post" th:action="@{/registration}" th:object="${user}">
+
+                    <div class="wrap-input100 validate-input m-b-16">
+                        <input class="input100" type="text" th:field="*{username}" placeholder="Username" required>
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input m-b-16">
+                        <input class="input100" type="date" th:field="*{birthDate}" placeholder="Date" required>
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input m-b-16">
+                        <input class="input100" type="text" th:field="*{email}" placeholder="Email" required>
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input m-b-16">
+                        <input class="input100" type="password" th:field="*{password}" placeholder="Password" required>
+                        <span class="focus-input100"></span>
+                    </div>
+
+<!--                    <div class="wrap-input100 validate-input m-b-16" >-->
+<!--                        <input class="input100" type="password" name="password-confirm" placeholder="Confirmation" required>-->
+<!--                        <span class="focus-input100"></span>-->
+<!--                    </div>-->
+
+                    <div class="container-login100-form-btn m-t-17">
+                        <button class="login100-form-btn" type="submit">Sign up</button>
+
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="footer :: content"></footer>
+</div>
+</body>
+
+</html>
