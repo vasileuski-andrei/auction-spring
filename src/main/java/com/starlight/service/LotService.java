@@ -19,8 +19,8 @@ public class LotService implements CommonService<Lot, Integer> {
     }
 
     @Override
-    public Lot create(Lot model) {
-        return null;
+    public void create(Lot model) {
+
     }
 
     @Override

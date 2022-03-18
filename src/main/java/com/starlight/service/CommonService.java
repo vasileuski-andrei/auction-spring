@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface CommonService<T, V> {
 
-    T create(T model);
+    void create(T model);
 
     T findById(V value);
 

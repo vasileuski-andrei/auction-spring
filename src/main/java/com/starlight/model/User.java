@@ -1,10 +1,10 @@
 package com.starlight.model;
 
-import com.starlight.util.LocalDateTimeConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -21,7 +21,7 @@ public class User {
     private Long id;
     @Column(unique = true, nullable = false)
     private String username;
-//    @Convert(converter = LocalDateTimeConverter.class)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
     private String email;
     private String password;

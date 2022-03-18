@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="wrap-input100 validate-input m-b-16">
-                        <input class="input100" type="date" th:field="*{birthDate}" placeholder="Date" required>
+                        <input class="input100" type="date" th:value="*{birthDate}" th:field="*{birthDate}" placeholder="Date" required>
                         <span class="focus-input100"></span>
                     </div>
 
@@ -49,6 +49,13 @@
 <!--                        <span class="focus-input100"></span>-->
 <!--                    </div>-->
 
+<!--                    <select >-->
+<!--                        <option value=""> &#45;&#45; </option>-->
+<!--                        <option th:each="country : ${countries}"-->
+<!--                                th:value="${country.countryCode}"-->
+<!--                                th:utext="${country.countryName}"/>-->
+<!--                    </select>-->
+
                     <div class="container-login100-form-btn m-t-17">
                         <button class="login100-form-btn" type="submit">Sign up</button>
 
@@ -56,6 +63,9 @@
                     </div>
 
                 </form>
+
+
+
             </div>
         </div>
     </div>
