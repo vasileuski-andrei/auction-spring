@@ -13,7 +13,7 @@
 
 <div class="page-wrapper">
 
-    <header th:replace="header :: content"></header>
+    <header th:replace="header :: header-content"></header>
 
     <div class="content-wrapper">
 
@@ -35,7 +35,8 @@
 
                         <tr th:each="lot : ${lots}">
                             <td th:text="${lot.id}"></td>
-                            <td th:text="${lot.lotName}"></td>
+<!--                            <td th:text="${lot.lotName}"></td>-->
+                            <td> <a th:text="${lot.lotName}" th:href="@{/lot/{id}(id=${lot.getId()})}"></a></td>
                             <td th:text="${lot.lotOwner}"></td>
                             <td th:text="${lot.startBid}"></td>
                             <td th:text="${lot.lastBid}"></td>
@@ -56,7 +57,7 @@
 
     </div>
 
-    <footer th:replace="footer :: content"></footer>
+    <footer th:replace="footer :: footer-content"></footer>
 </div>
 </body>
 </html>
