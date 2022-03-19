@@ -38,7 +38,8 @@
                             <td th:text="${lot.lotName}"></td>
                             <td th:text="${lot.lotOwner}"></td>
                             <td th:text="${lot.startBid}"></td>
-                            <td> - </td>
+                            <td th:text="${lot.lastBid}"></td>
+
                             <td th:switch="${lot.statusId}">
                                 <span class="lot-status-sell" th:case="1">SELL</span>
                                 <span class="lot-status-sold" th:case="2">SOLD</span>

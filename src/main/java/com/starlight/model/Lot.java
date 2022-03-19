@@ -18,8 +18,6 @@ public class Lot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String lotName;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
     private String lotOwner;
     private int startBid;
     private int statusId;

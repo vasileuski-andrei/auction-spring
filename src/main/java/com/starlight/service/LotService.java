@@ -1,6 +1,7 @@
 package com.starlight.service;
 
 import com.starlight.model.Lot;
+import com.starlight.projection.LotProjection;
 import com.starlight.repository.LotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,10 @@ public class LotService implements CommonService<Lot, Integer> {
 
     @Override
     public List<Lot> getAll() {
-        return lotRepository.findAll();
+        return null;
+    }
+
+    public List<LotProjection> getAllLot() {
+        return lotRepository.findAllLot();
     }
 }
