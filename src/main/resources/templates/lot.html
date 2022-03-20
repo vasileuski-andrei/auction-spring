@@ -22,29 +22,27 @@
 
         <div class="first-section">
 
-            <div id="content">
-
+            <div id="content" th:with="lot=${lotBids.get(0)}">
+<!--                <div th:with="var=${var_value}">-->
                 <div class="lot-info">
-                    <h2>Lot name: <span th:text="${bids.get(0).getLotName()}"></span></h2>
-                    <h2>Lot owner: <span th:text="${bids.get(0).getLotOwner()}"></span></h2>
-                    <h2>Start bid: <span th:text="${bids.get(0).getStartBid()}"></span></h2>
-                    <h2>Last bid: <span th:text="${bids.get(bids.size()-1).getUserBid()}"></span></h2>
+                    <h2>Lot name: <span th:text="${lot.getLotName()}"></span></h2>
+                    <h2>Lot owner: <span th:text="${lot.getLotOwner()}"></span></h2>
+                    <h2>Start bid: <span th:text="${lot.getStartBid()}"></span></h2>
+                    <h2>Last bid: <span th:text="${lotBids.get(lotBids.size()-1).getUserBid()}"></span></h2>
                 </div>
 
                 <div class="lot-info">
                     <table>
-
                         <tr>
                             <th>USER</th>
                             <th>BID</th>
                             <th>TIME</th>
                         </tr>
 
-                        <tr th:each="bid : ${bids}">
+                        <tr th:each="bid : ${lotBids}">
                             <td th:text="${bid.username}"></td>
                             <td th:text="${bid.userBid}"></td>
                             <td th:text="${bid.username}"></td>
-
                         </tr>
 
                     </table>
@@ -52,9 +50,10 @@
                 </div>
 
                 <div class="wrap-bet-form">
-                    <form class="login100-form validate-form flex-sb flex-w" action="/lot" method="post">
+                    <form class="login100-form validate-form flex-sb flex-w" th:method="post" th:action="@{/lot/{id}(id=${lot.getLotId()})}" >
 
                         <div class="wrap-input100 validate-input">
+                            <input type="hidden" th:value="${lot.lotName}" name="lotName"/>
                             <input class="input100" type="text" name="userBid" placeholder="Sum" required>
                             <span class="focus-input100"></span>
                         </div>

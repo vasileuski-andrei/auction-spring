@@ -35,7 +35,6 @@
 
                         <tr th:each="lot : ${lots}">
                             <td th:text="${lot.id}"></td>
-<!--                            <td th:text="${lot.lotName}"></td>-->
                             <td> <a th:text="${lot.lotName}" th:href="@{/lot/{id}(id=${lot.getId()})}"></a></td>
                             <td th:text="${lot.lotOwner}"></td>
                             <td th:text="${lot.startBid}"></td>

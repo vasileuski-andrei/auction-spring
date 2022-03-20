@@ -1,12 +1,11 @@
 package com.starlight.controller;
 
+import com.starlight.model.Bid;
 import com.starlight.service.BidService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/lot")
@@ -20,8 +19,24 @@ public class LotController {
     }
 
     @GetMapping("/{id}")
-    public String getLotPage(@PathVariable("id") int id, Model model) {
-        model.addAttribute("bids", bidService.findLotBidsById(id));
+    public String getLotPage(@PathVariable("id") int id, Model model,
+                             @ModelAttribute("bid") Bid bid) {
+        model.addAttribute("lotBids", bidService.findLotBidsById(id));
         return "lot";
+    }
+
+    @PostMapping("/{id}")
+    public String addBid(@PathVariable("id") int id,
+                         @RequestParam("lotName") String lotName,
+                         @RequestParam("userBid") String userBid) {
+        var bid = Bid.builder()
+                .lotId(id)
+                .lotName(lotName)
+                .username("testuser")
+                .userBid(Integer.parseInt(userBid))
+                .build();
+        bidService.create(bid);
+
+        return "redirect:/lot/{id}";
     }
 }

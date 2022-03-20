@@ -22,6 +22,7 @@ public class BidService implements CommonService<Bid, Long> {
 
     @Override
     public void create(Bid model) {
+        bidRepository.save(model);
 
     }
 
