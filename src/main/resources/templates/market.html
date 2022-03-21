@@ -19,7 +19,32 @@
 
         <aside class="aside"><a href="#">About us</a><a href="#">Delivery</a><a href="#">FAQ</a></aside>
 
-        <div class="first-section">
+        <div class="market-first-section">
+
+            <div class="add-new-lot p-t-50 p-b-90">
+                <form class="login100-form validate-form flex-sb flex-w" th:method="post" th:action="@{/market/new-lot}">
+
+                    <div class="wrap-input100 validate-input m-b-16">
+                        <input class="input100" type="text" name="lotName" placeholder="Lot name" required>
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input m-b-16">
+                        <input class="input100" type="text" name="bid" placeholder="Start bid" required>
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input m-b-16">
+                        <input class="input100" type="time" name="term" placeholder="Sale term" required>
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="container-login100-form-btn m-t-17">
+                        <button class="login100-form-btn">ADD</button>
+                    </div>
+
+                </form>
+            </div>
 
             <div id="content">
                 <table>
@@ -51,6 +76,8 @@
 
                 </table>
             </div>
+
+
 
         </div>
 

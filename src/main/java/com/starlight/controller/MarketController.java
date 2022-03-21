@@ -1,13 +1,14 @@
 package com.starlight.controller;
 
+import com.starlight.dto.LotDto;
 import com.starlight.model.Lot;
 import com.starlight.projection.LotProjection;
 import com.starlight.service.LotService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class MarketController {
     private final LotService lotService;
 
     @Autowired
-    public MarketController(LotService lotService) {
+    public MarketController(LotService lotService, ModelMapper modelMapper) {
         this.lotService = lotService;
     }
 
@@ -28,4 +29,21 @@ public class MarketController {
         model.addAttribute("lots", lots);
         return "market";
     }
+
+    @PostMapping("/new-lot")
+    public String addNewLot(@RequestParam("lotName") String lotName,
+                            @RequestParam("bid") String bid,
+                            @RequestParam("term") String term) {
+
+        var lotDto = LotDto.builder()
+                .lotName(lotName)
+                .startBid(Integer.parseInt(bid))
+                .lotOwner("test@mail.ru")
+                .statusId(1)
+                .saleTerm(term)
+                .build();
+        lotService.create(lotDto);
+        return "redirect:/market";
+    }
+
 }

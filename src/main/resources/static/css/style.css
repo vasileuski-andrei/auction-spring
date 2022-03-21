@@ -211,7 +211,7 @@ html, body {
   max-width: 1600px;
   min-width: 980px;
   /*padding-top: 40px;*/
-  /*display: flex;*/
+  display: flex;
 }
 
 /*aside*/
@@ -239,6 +239,12 @@ html, body {
 /*first-section*/
 .first-section {
   display: table-cell;
+  padding-left: 30px;
+  width: 85%;
+}
+
+.market-first-section {
+  display: flex;
   padding-left: 30px;
   width: 85%;
 }

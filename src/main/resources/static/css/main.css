@@ -140,6 +140,13 @@ iframe {
   position: relative;
 }
 
+.add-new-lot {
+  width: 250px;
+  background: #fff;
+  border-radius: 10px;
+  position: relative;
+}
+
 .wrap-bet-form {
   width: 100px;
   background: #fff;
