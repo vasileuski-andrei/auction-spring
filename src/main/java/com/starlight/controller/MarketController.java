@@ -1,10 +1,7 @@
 package com.starlight.controller;
 
 import com.starlight.dto.LotDto;
-import com.starlight.model.Lot;
-import com.starlight.projection.LotProjection;
 import com.starlight.service.LotService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +16,13 @@ public class MarketController {
     private final LotService lotService;
 
     @Autowired
-    public MarketController(LotService lotService, ModelMapper modelMapper) {
+    public MarketController(LotService lotService) {
         this.lotService = lotService;
     }
 
     @GetMapping
     public String getMarketPage(Model model) {
-        List<LotProjection> lots = lotService.getAllLot();
+        List<LotDto> lots = lotService.getAllLot();
         model.addAttribute("lots", lots);
         return "market";
     }

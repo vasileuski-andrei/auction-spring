@@ -16,7 +16,7 @@ public class Lot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String lotName;
     private String lotOwner;
     private int startBid;

@@ -1,5 +1,6 @@
 package com.starlight.controller;
 
+import com.starlight.dto.BidDto;
 import com.starlight.model.Bid;
 import com.starlight.service.BidService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +27,16 @@ public class LotController {
     }
 
     @PostMapping("/{id}")
-    public String addBid(@PathVariable("id") int id,
+    public String addBid(@PathVariable("id") Long id,
                          @RequestParam("lotName") String lotName,
                          @RequestParam("userBid") String userBid) {
-        var bid = Bid.builder()
+        var bidDto = BidDto.builder()
                 .lotId(id)
                 .lotName(lotName)
                 .username("testuser")
                 .userBid(Integer.parseInt(userBid))
                 .build();
-        bidService.create(bid);
+        bidService.create(bidDto);
 
         return "redirect:/lot/{id}";
     }

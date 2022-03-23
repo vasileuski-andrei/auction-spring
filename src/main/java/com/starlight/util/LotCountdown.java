@@ -1,19 +1,37 @@
 package com.starlight.util;
 
 import com.starlight.service.LotService;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+import java.time.LocalTime;
 import java.util.Timer;
 import java.util.TimerTask;
 
-@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Component
+@Scope("prototype")
 public class LotCountdown implements Runnable {
-    private int lotId;
+
+
+    private LotService lotService;
+
+    private Long lotId;
     private Thread thread;
     private int saleTimeInSeconds;
 
-    public LotCountdown(int lotId, int saleTimeInSeconds) {
+    @Autowired
+    public LotCountdown(LotService lotService) {
+        this.lotService = lotService;
+    }
+
+    public void startTimer(Long lotId, int saleTimeInSeconds) {
         this.lotId = lotId;
         this.saleTimeInSeconds = saleTimeInSeconds;
         thread = new Thread(this);
@@ -30,18 +48,18 @@ public class LotCountdown implements Runnable {
 
                 if (saleTimeInSeconds == 0) {
                     timer.cancel();
-//                    lotService.updateLot(lotId);
+                    lotService.changeLotStatus(lotId);
                 }
             }
         }, 0, 1000);
 
     }
 
-//    public String getSaleRemainingTime() {
-//        if (saleTimeInSeconds == null) {
-//            return "-";
-//        }
-//        return LocalTime.MIN.plusSeconds(saleTimeInSeconds).toString();
-//    }
+    public String getSaleRemainingTime() {
+        if (saleTimeInSeconds == 0) {
+            return "-";
+        }
+        return LocalTime.MIN.plusSeconds(saleTimeInSeconds).toString();
+    }
 
 }

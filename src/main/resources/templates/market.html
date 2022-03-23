@@ -63,14 +63,14 @@
                             <td> <a th:text="${lot.lotName}" th:href="@{/lot/{id}(id=${lot.getId()})}"></a></td>
                             <td th:text="${lot.lotOwner}"></td>
                             <td th:text="${lot.startBid}"></td>
-                            <td th:text="${lot.lastBid}"></td>
+                            <td th:text="${lot.userBid}"></td>
 
                             <td th:switch="${lot.statusId}">
                                 <span class="lot-status-sell" th:case="1">SELL</span>
                                 <span class="lot-status-sold" th:case="2">SOLD</span>
                                 <span class= "lot-status-not-sold" th:case="3">NOT SOLD</span>
                             </td>
-                            <td> - </td>
+                            <td th:text="${lot.getSaleTerm()}"></td>
 
                         </tr>
 
