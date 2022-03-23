@@ -1,10 +1,12 @@
 package com.starlight.controller;
 
-import com.starlight.model.User;
+import com.starlight.dto.UserDto;
 import com.starlight.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/registration")
@@ -18,13 +20,13 @@ public class RegistrationController {
     }
 
     @GetMapping
-    public String getRegistrationPage(@ModelAttribute("user") User user) {
+    public String getRegistrationPage(@ModelAttribute("user") UserDto user) {
         return "registration";
     }
 
     @PostMapping
-    public String createUser(@ModelAttribute("user") User user) {
-        userService.create(user);
+    public String createUser(@ModelAttribute("user") @Valid UserDto userDto) {
+        userService.create(userDto);
         return "redirect:/index";
     }
 

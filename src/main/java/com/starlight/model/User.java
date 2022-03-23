@@ -22,7 +22,6 @@ public class User {
     private Long id;
     @Column(unique = true, nullable = false)
     private String username;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
     private String email;
     private String password;
