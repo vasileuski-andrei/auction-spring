@@ -4,6 +4,8 @@ import com.starlight.dto.UserDto;
 import com.starlight.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,8 +27,18 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String createUser(@ModelAttribute("user") @Valid UserDto userDto) {
-        userService.create(userDto);
+    public String createUser(@ModelAttribute("user") @Valid UserDto userDto, Errors errors) {
+        for (ObjectError error : errors.getAllErrors()) {
+            System.out.println(error.getObjectName());
+            System.out.println(error.getDefaultMessage());
+//            System.out.println("test field");
+        }
+        if (!errors.hasErrors()) {
+            userService.create(userDto);
+        } else {
+            return "registration";
+        }
+
         return "redirect:/index";
     }
 
