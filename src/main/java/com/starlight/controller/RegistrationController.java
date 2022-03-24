@@ -1,12 +1,15 @@
 package com.starlight.controller;
 
 import com.starlight.dto.UserDto;
+import com.starlight.exception.UserAlreadyExistException;
 import com.starlight.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
@@ -27,15 +30,16 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String createUser(@ModelAttribute("user") @Valid UserDto userDto, Errors errors) {
-        for (ObjectError error : errors.getAllErrors()) {
-            System.out.println(error.getObjectName());
-            System.out.println(error.getDefaultMessage());
-//            System.out.println("test field");
+    public String createUser(@ModelAttribute("user") @Valid UserDto userDto,
+                             Errors errors, Model model) {
+        if (errors.hasErrors()) {
+            return "registration";
         }
-        if (!errors.hasErrors()) {
+
+        try {
             userService.create(userDto);
-        } else {
+        } catch (UserAlreadyExistException e) {
+            model.addAttribute("errorMessage", e.getDetail());
             return "registration";
         }
 

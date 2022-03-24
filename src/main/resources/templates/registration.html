@@ -57,6 +57,8 @@
                     <span class="alert-message" th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation error</span>
                     <span class="alert-message" th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation error</span>
 
+                    <span class="alert-message" th:if="${errorMessage}" role="alert" th:text="${errorMessage}"></span>
+
                 </form>
 
             </div>

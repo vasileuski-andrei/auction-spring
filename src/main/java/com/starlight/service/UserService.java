@@ -2,6 +2,7 @@ package com.starlight.service;
 
 import com.starlight.dto.LotDto;
 import com.starlight.dto.UserDto;
+import com.starlight.exception.UserAlreadyExistException;
 import com.starlight.model.Lot;
 import com.starlight.model.User;
 import com.starlight.repository.UserRepository;
@@ -24,8 +25,16 @@ public class UserService implements CommonService<UserDto, Long> {
     }
 
     @Override
-    public void create(UserDto model) {
-        userRepository.save(convertToUser(model));
+    public void create(UserDto userDto) throws UserAlreadyExistException {
+        if (emailOrUsernameExist(userDto)) {
+            throw new UserAlreadyExistException("Account with email " + "\'" + userDto.getEmail() + "\'" +
+                    " or username " + "\'" + userDto.getUsername() + "\'" + " is already exist");
+        }
+        userRepository.save(convertToUser(userDto));
+    }
+
+    private boolean emailOrUsernameExist(UserDto userDto) {
+        return userRepository.findByEmailOrUsername(userDto.getEmail(), userDto.getUsername()) != null;
     }
 
     @Override

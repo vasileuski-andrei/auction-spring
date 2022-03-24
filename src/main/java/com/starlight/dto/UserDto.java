@@ -22,7 +22,7 @@ public class UserDto {
     private Long id;
 
     @NotBlank(message = "Username should not be empty")
-    @Size(min = 3, max = 15, message = "Username should contain min 3 and max 15 characters")
+    @Size(min = 2, max = 15, message = "Username should contain min 3 and max 15 characters")
     private String username;
 
     @NotNull
