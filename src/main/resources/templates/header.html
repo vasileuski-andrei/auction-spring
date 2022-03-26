@@ -1,4 +1,5 @@
-<header class="header" th:fragment="header-content" xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<header class="header" th:fragment="header-content" xmlns:th="http://www.thymeleaf.org"
+        xmlns:c="http://www.w3.org/1999/XSL/Transform" xmlns:sec="http://www.w3.org/1999/xhtml">
 
     <div class="common-header-wrapper">
 
@@ -10,9 +11,9 @@
                 <a href="/market">market</a>
 <!--                <a href="/add-new-lot">add new lot</a>-->
                 <a href="#">cashbox</a>
-                <c:if test="${sessionScope.user != null}" >
+<!--                <c:if test="${sessionScope.user != null}" >-->
                     <a href="/profile">profile</a>
-                </c:if>
+<!--                </c:if>-->
 
 
             </nav>
@@ -22,19 +23,21 @@
                 <div class="cp-wrapper-elements">
 
                     <div class="contact-links">
-                        <c:if test="${sessionScope.user == null}" >
-                            <div><a href="/registration">Sign up</a></div>
-                            <div><a href="/login">Sign in</a></div>
-                        </c:if>
 
-                        <c:if test="${sessionScope.user != null}" >
-                            <div>
-                                <form action="/logout" method="post">
-                                    <button type="submit">Sign out</button>
-                                </form>
-                            </div>
+                        <div sec:authorize="!isAuthenticated()">
+                            <a href="/registration">Sign up</a>
+                        </div>
 
-                        </c:if>
+                        <div sec:authorize="!isAuthenticated()">
+                            <a href="/login">Sign in</a>
+                        </div>
+
+                        <div sec:authorize="isAuthenticated()">
+                            <form action="/logout" method="post">
+                                <button type="submit">Sign out</button>
+                            </form>
+                        </div>
+
 
                     </div>
 

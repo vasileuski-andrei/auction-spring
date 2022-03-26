@@ -8,17 +8,15 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.starlight.model.LotStatus.NOT_SOLD;
-import static com.starlight.model.LotStatus.SOLD;
+import static com.starlight.model.enums.LotStatus.NOT_SOLD;
+import static com.starlight.model.enums.LotStatus.SOLD;
 
 @Service
 public class LotService implements CommonService<LotDto, Integer> {

@@ -1,9 +1,8 @@
 package com.starlight.service;
 
-import com.starlight.dto.LotDto;
+import com.starlight.config.security.SecurityConfig;
 import com.starlight.dto.UserDto;
 import com.starlight.exception.UserAlreadyExistException;
-import com.starlight.model.Lot;
 import com.starlight.model.User;
 import com.starlight.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -12,14 +11,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.starlight.model.enums.Role.*;
+import static com.starlight.model.enums.UserStatus.*;
+
 @Service
 public class UserService implements CommonService<UserDto, Long> {
 
+    private final SecurityConfig securityConfig;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository, ModelMapper modelMapper) {
+    public UserService(SecurityConfig securityConfig, UserRepository userRepository, ModelMapper modelMapper) {
+        this.securityConfig = securityConfig;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }
@@ -30,7 +34,11 @@ public class UserService implements CommonService<UserDto, Long> {
             throw new UserAlreadyExistException("Account with email " + "\'" + userDto.getEmail() + "\'" +
                     " or username " + "\'" + userDto.getUsername() + "\'" + " is already exist");
         }
-        userRepository.save(convertToUser(userDto));
+        User user = convertToUser(userDto);
+        user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
+        user.setRole(USER);
+        user.setUserStatus(ACTIVE);
+        userRepository.save(user);
     }
 
     private boolean emailOrUsernameExist(UserDto userDto) {

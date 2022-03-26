@@ -1,13 +1,13 @@
 package com.starlight.model;
 
+import com.starlight.model.enums.Role;
+import com.starlight.model.enums.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 
 @Data
@@ -17,6 +17,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,5 +26,9 @@ public class User {
     private LocalDate birthDate;
     private String email;
     private String password;
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
+    @Enumerated(value = EnumType.STRING)
+    private UserStatus userStatus;
 
 }

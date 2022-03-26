@@ -1,0 +1,76 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"-->
+<!--      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">-->
+<!--<head>-->
+<!--  <title>Spring Security Example </title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<form th:action="@{/login}" method="post">-->
+<!--  <div><label> User Name : <input type="text" name="username"/> </label></div>-->
+<!--  <div><label> Password: <input type="password" name="password"/> </label></div>-->
+<!--  <div><input type="submit" value="Sign In"/></div>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+  <link rel="stylesheet" th:href="@{/css/main.css}"/>
+  <link rel="stylesheet" th:href="@{/css/util.css}"/>
+  <link rel="stylesheet" th:href="@{/css/normalize.css}"/>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+  <header th:replace="header :: header-content"></header>
+
+  <div class="content-wrapper">
+
+    <aside class="aside"><a href="#">About us</a><a href="#">Delivery</a><a href="#">FAQ</a></aside>
+
+    <div class="first-section">
+
+      <div class="wrap-login100 p-t-50 p-b-90">
+        <form class="login100-form validate-form flex-sb flex-w" method="post" th:action="@{/login}">
+
+          <div class="wrap-input100 validate-input m-b-16">
+            <input class="input100" type="text" name="username" placeholder="Email" required>
+            <span class="focus-input100"></span>
+          </div>
+
+          <div class="wrap-input100 validate-input m-b-16">
+            <input class="input100" type="password" name="password" placeholder="Password" required>
+            <span class="focus-input100"></span>
+          </div>
+
+
+
+          <div>
+            <a href="/registration">Sign up</a>
+
+          </div>
+
+          <div class="container-login100-form-btn m-t-17">
+            <button class="login100-form-btn" type="submit">Sign in</button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <footer th:replace="footer :: footer-content"></footer>
+</div>
+</body>
+</html>

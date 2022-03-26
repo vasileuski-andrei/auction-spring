@@ -1,6 +1,7 @@
-package com.starlight.model;
+package com.starlight.model.enums;
 
 public enum LotStatus {
+
     SELL(1),
     SOLD(2),
     NOT_SOLD(3);
