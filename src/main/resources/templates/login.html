@@ -53,8 +53,6 @@
             <span class="focus-input100"></span>
           </div>
 
-
-
           <div>
             <a href="/registration">Sign up</a>
 
@@ -64,7 +62,15 @@
             <button class="login100-form-btn" type="submit">Sign in</button>
           </div>
 
+          <div th:if="${param.error}">
+            <div class="alert-message">
+              Invalid username or password.
+            </div>
+          </div>
+
         </form>
+
+
       </div>
 
     </div>

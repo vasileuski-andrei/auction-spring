@@ -110,19 +110,19 @@ html, body {
 .contact-links {
   display: flex;
   justify-content: space-between;
-  width: 110px;
+  width: 120px;
 }
 
 .contact-links a {
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 13px;
   color: #ffff19;
   text-decoration: none;
 }
 
 .contact-links button {
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 13px;
   color: #ffff19;
   text-decoration: none;
 }

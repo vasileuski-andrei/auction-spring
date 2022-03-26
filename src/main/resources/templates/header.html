@@ -9,12 +9,8 @@
 
             <nav class="top-menu">
                 <a href="/market">market</a>
-<!--                <a href="/add-new-lot">add new lot</a>-->
                 <a href="#">cashbox</a>
-<!--                <c:if test="${sessionScope.user != null}" >-->
-                    <a href="/profile">profile</a>
-<!--                </c:if>-->
-
+                <a sec:authorize="isAuthenticated()" href="/profile">profile</a>
 
             </nav>
 
