@@ -20,11 +20,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println("mail: " + email);
-        System.out.println(userRepository);
-        var user = userRepository.findByEmail(email);
-        System.out.println(user);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        var user = userRepository.findByUsername(username);
         return SecurityUser.fromUser(user);
     }
 }

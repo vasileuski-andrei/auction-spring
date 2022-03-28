@@ -23,12 +23,12 @@
         <div class="first-section">
 
             <div id="content" th:with="lot=${lotBids.get(0)}">
-<!--                <div th:with="var=${var_value}">-->
                 <div class="lot-info">
                     <h2>Lot name: <span th:text="${lot.getLotName()}"></span></h2>
                     <h2>Lot owner: <span th:text="${lot.getLotOwner()}"></span></h2>
                     <h2>Start bid: <span th:text="${lot.getStartBid()}"></span></h2>
-                    <h2>Last bid: <span th:text="${lotBids.get(lotBids.size()-1).getUserBid()}"></span></h2>
+                    <h2>Last bid: <span th:text="${lot.lastBid}"></span></h2>
+<!--                    <h2>Last bid: <span th:text="${lotBids.get(lotBids.size()-1).getUserBid()}"></span></h2>-->
                 </div>
 
                 <div class="lot-info">
@@ -54,6 +54,7 @@
 
                         <div class="wrap-input100 validate-input">
                             <input type="hidden" th:value="${lot.lotName}" name="lotName"/>
+                            <input type="hidden" th:value="${lot.lotOwner}" name="lotOwner"/>
                             <input class="input100" type="text" name="userBid" placeholder="Sum" required>
                             <span class="focus-input100"></span>
                         </div>
@@ -62,7 +63,11 @@
                             <button class="login100-form-btn">Bid</button>
                         </div>
 
+<!--                        <span class="alert-message" th:if="${errorMessage}" role="alert" th:text="${errorMessage}"></span>-->
+
                     </form>
+
+
                 </div>
 
             </div>

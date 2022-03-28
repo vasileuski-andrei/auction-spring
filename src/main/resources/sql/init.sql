@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS lot(
 CREATE TABLE IF NOT EXISTS bid(
     id BIGSERIAL PRIMARY KEY,
     lot_name VARCHAR(70) NOT NULL,
-    lot_id INT NOT NULL,
+    lot_id BIGINT NOT NULL,
     username VARCHAR(50) NOT NULL,
     user_bid INT,
     FOREIGN KEY (lot_id) REFERENCES lot(id)

@@ -1,12 +1,15 @@
 package com.starlight.service;
 
+import com.starlight.exception.BidInARowException;
+import com.starlight.exception.OwnerBidException;
 import com.starlight.exception.UserAlreadyExistException;
+import com.starlight.exception.ValidationException;
 
 import java.util.List;
 
 public interface CommonService<T, V> {
 
-    void create(T model) throws UserAlreadyExistException;
+    void create(T model) throws ValidationException, UserAlreadyExistException;
 
     T findById(V value);
 

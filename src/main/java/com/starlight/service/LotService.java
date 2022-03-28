@@ -110,4 +110,8 @@ public class LotService implements CommonService<LotDto, Integer> {
         lastBids.remove(lotId);
     }
 
+    public boolean isTheLotStillSale(Long id) {
+        return lotCountdown.containsKey(id);
+    }
+
 }

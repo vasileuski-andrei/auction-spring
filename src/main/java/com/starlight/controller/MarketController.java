@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -30,12 +31,14 @@ public class MarketController {
     @PostMapping("/new-lot")
     public String addNewLot(@RequestParam("lotName") String lotName,
                             @RequestParam("bid") String bid,
-                            @RequestParam("term") String term) {
+                            @RequestParam("term") String term, Principal principal) {
+
+        System.out.println();
 
         var lotDto = LotDto.builder()
                 .lotName(lotName)
                 .startBid(Integer.parseInt(bid))
-                .lotOwner("test@mail.ru")
+                .lotOwner(principal.getName())
                 .statusId(1)
                 .saleTerm(term)
                 .build();
