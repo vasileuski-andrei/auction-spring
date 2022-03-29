@@ -3,16 +3,18 @@ package com.starlight.service;
 import com.starlight.config.security.SecurityConfig;
 import com.starlight.dto.UserDto;
 import com.starlight.exception.UserAlreadyExistException;
+import com.starlight.exception.ValidationException;
 import com.starlight.model.User;
 import com.starlight.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.starlight.model.enums.Role.*;
-import static com.starlight.model.enums.UserStatus.*;
+import static com.starlight.model.enums.Role.USER;
+import static com.starlight.model.enums.UserStatus.ACTIVE;
 
 @Service
 public class UserService implements CommonService<UserDto, Long> {
@@ -57,6 +59,15 @@ public class UserService implements CommonService<UserDto, Long> {
 
     @Override
     public void delete(Long value) {
+
+    }
+
+    public void deleteByUsername(String username, String password) throws ValidationException, DataIntegrityViolationException {
+        var passwordByUsername = userRepository.findPasswordByUsername(username);
+        if (!securityConfig.passwordEncoder().matches(password, passwordByUsername)) {
+            throw new ValidationException("Incorrect password");
+        }
+        userRepository.deleteUserByUsername(username);
     }
 
     @Override

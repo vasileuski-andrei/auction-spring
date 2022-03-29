@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .disable()
                 .authorizeRequests()
                     .antMatchers("/index").permitAll()
-                    .antMatchers("/market").fullyAuthenticated()
+                    .antMatchers("/market", "/user-profile", "/lot/**").fullyAuthenticated()
                     .antMatchers("/registration").not().fullyAuthenticated()
                     .antMatchers("/login").not().fullyAuthenticated()
                 .and()
@@ -48,27 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .clearAuthentication(true)
                     .deleteCookies("JSESSIONID")
                     .logoutSuccessUrl("/login");
-//                .and()
-//                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
-
-
-//        http
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/").permitAll()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login").permitAll()
-//                .defaultSuccessUrl("/market")
-//                .and()
-//                .logout()
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
-//                .invalidateHttpSession(true)
-//                .clearAuthentication(true)
-//                .deleteCookies("JSESSIONID")
-//                .logoutSuccessUrl("/login");
-
-
 
     }
 
