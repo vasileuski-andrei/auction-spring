@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/lot")
@@ -28,14 +29,14 @@ public class LotController {
 
     @GetMapping("/{id}")
     public String getLotPage(@PathVariable("id") Long id, Model model) {
-        var lotBids= bidService.findLotBidsById(id);
-        var lotInfo = lotBids.get(0);
+        List<BidDto> lotBids= bidService.findLotBidsById(id);
+        var lastBidDto = lotBids.get(lotBids.size()-1);
 
-        lotName = lotInfo.getLotName();
-        lotOwner = lotInfo.getLotOwner();
-        startBid = lotInfo.getStartBid();
-        lastBid = lotInfo.getLastBid();
-        lastUser = lotInfo.getLastUser();
+        lotName = lastBidDto.getLotName();
+        lotOwner = lastBidDto.getLotOwner();
+        startBid = lastBidDto.getStartBid();
+        lastBid = lastBidDto.getUserBid();
+        lastUser = lastBidDto.getUsername();
 
         model.addAttribute("lotBids", lotBids);
         return "lot";

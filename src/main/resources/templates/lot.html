@@ -22,13 +22,12 @@
 
         <div class="first-section">
 
-            <div id="content" th:with="lot=${lotBids.get(0)}">
+            <div id="content" th:with="lot=${lotBids.get(lotBids.size()-1)}">
                 <div class="lot-info">
                     <h2>Lot name: <span th:text="${lot.getLotName()}"></span></h2>
                     <h2>Lot owner: <span th:text="${lot.getLotOwner()}"></span></h2>
                     <h2>Start bid: <span th:text="${lot.getStartBid()}"></span></h2>
-                    <h2>Last bid: <span th:text="${lot.lastBid}"></span></h2>
-<!--                    <h2>Last bid: <span th:text="${lotBids.get(lotBids.size()-1).getUserBid()}"></span></h2>-->
+                    <h2>Last bid: <span th:text="${lot.getUserBid()}"></span></h2>
                 </div>
 
                 <div class="lot-info">

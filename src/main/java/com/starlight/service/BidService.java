@@ -30,12 +30,10 @@ public class BidService implements CommonService<BidDto, Long> {
 
     @Override
     public void create(BidDto model) throws ValidationException {
-        var lotId = model.getLotId();
         bidValidator.validateData(model);
 
-//        bidRepository.save(convertToBid(model));
         bidRepository.addData(convertToBid(model));
-        lastBids.put(lotId, model.getUsername());
+        lastBids.put(model.getLotId(), model.getUsername());
 
     }
 
@@ -60,19 +58,7 @@ public class BidService implements CommonService<BidDto, Long> {
     }
 
     public List<BidDto> findLotBidsById(Long id) {
-        var bidDto = bidRepository.findLotBidsById(id);
-        var lotInfo = bidDto.get(0);
-
-        if (lotInfo.getUsername() != null) {
-            String[] lastBidInfo = bidRepository.findLastLotBIdById(id).split(",");
-            System.out.println();
-            lotInfo.setLastBid(Integer.parseInt(lastBidInfo[0]));
-            lotInfo.setLastUser(lastBidInfo[1]);
-        }
-
-        System.out.println(bidDto.toString());
-
-        return bidDto;
+        return bidRepository.findLotBidsById(id);
     }
 
     private Bid convertToBid(BidDto bidDto) {
