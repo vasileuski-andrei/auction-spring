@@ -438,3 +438,18 @@ html, body {
   color: #c80000;
   margin-top: 10px;
 }
+
+.success-alert-message {
+  color: green;
+  margin-top: 10px;
+}
+
+.unsuccess-alert-message {
+  color: #c80000;
+  margin-top: 10px;
+}
+
+.neutral-alert-message {
+  color: black;
+  margin-top: 10px;
+}

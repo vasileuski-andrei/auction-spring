@@ -30,7 +30,7 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String createUser(@ModelAttribute("user") @Valid UserDto userDto,
+    public String createUser(@ModelAttribute("user") UserDto userDto,
                              Errors errors, Model model) {
         if (errors.hasErrors()) {
             return "registration";
@@ -38,12 +38,24 @@ public class RegistrationController {
 
         try {
             userService.create(userDto);
+            model.addAttribute("message", "Letter with an activation code has been sent to your email");
         } catch (UserAlreadyExistException e) {
             model.addAttribute("errorMessage", e.getDetail());
             return "registration";
         }
 
-        return "redirect:/login";
+        return "/login";
+    }
+
+    @GetMapping("/activate/{code}")
+    public String accountActivate(@PathVariable String code, Model model) {
+        if (userService.isUserAccountActivated(code)) {
+            model.addAttribute("successMessage", "Your account successfully activated");
+        } else {
+            model.addAttribute("unsuccessMessage", "Activation code is not found");
+        }
+
+        return "login";
     }
 
 

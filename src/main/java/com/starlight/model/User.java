@@ -30,5 +30,6 @@ public class User {
     private Role role;
     @Enumerated(value = EnumType.STRING)
     private UserStatus userStatus;
+    private String activationCode;
 
 }

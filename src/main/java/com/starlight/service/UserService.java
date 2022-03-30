@@ -8,10 +8,12 @@ import com.starlight.model.User;
 import com.starlight.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.starlight.model.enums.Role.USER;
 import static com.starlight.model.enums.UserStatus.ACTIVE;
@@ -22,12 +24,16 @@ public class UserService implements CommonService<UserDto, Long> {
     private final SecurityConfig securityConfig;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final MailSenderService mailSenderService;
+    @Value("${account.activation.url}")
+    private final String ACTIVATION_ACCOUNT_URL = null;
 
     @Autowired
-    public UserService(SecurityConfig securityConfig, UserRepository userRepository, ModelMapper modelMapper) {
+    public UserService(SecurityConfig securityConfig, UserRepository userRepository, ModelMapper modelMapper, MailSenderService mailSenderService) {
         this.securityConfig = securityConfig;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.mailSenderService = mailSenderService;
     }
 
     @Override
@@ -40,7 +46,23 @@ public class UserService implements CommonService<UserDto, Long> {
         user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
         user.setRole(USER);
         user.setUserStatus(ACTIVE);
+        user.setActivationCode(UUID.randomUUID().toString());
         userRepository.save(user);
+
+        String activationMessage = String.format("""
+                Hello, %s.
+                Welcome to Auction. Please, visit this link to activate your account: %s%s
+                """, user.getUsername(), ACTIVATION_ACCOUNT_URL, user.getActivationCode());
+
+        mailSenderService.sendMail(user.getEmail(), "Account activation", activationMessage);
+    }
+
+    public boolean isUserAccountActivated(String code) {
+        User user = userRepository.findUserByActivationCode(code);
+        if (user == null) return false;
+        user.setActivationCode(null);
+        userRepository.save(user);
+        return true;
     }
 
     private boolean emailOrUsernameExist(UserDto userDto) {

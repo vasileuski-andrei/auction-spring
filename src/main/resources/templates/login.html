@@ -68,6 +68,18 @@
             </div>
           </div>
 
+          <div th:if="${successMessage}">
+            <div class="success-alert-message" th:text="${successMessage}"></div>
+          </div>
+          <div th:if="${unsuccessMessage}">
+            <div class="unsuccess-alert-message" th:text="${unsuccessMessage}"></div>
+          </div>
+          <div th:if="${message}">
+            <div class="neutral-alert-message" th:text="${message}"></div>
+          </div>
+
+
+
         </form>
 
 

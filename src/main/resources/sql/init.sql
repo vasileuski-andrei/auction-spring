@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS users(
     email VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(120) NOT NULL,
     role VARCHAR(50) NOT NULL,
-    user_status VARCHAR(50) NOT NULL
+    user_status VARCHAR(50) NOT NULL,
+    activation_code VARCHAR(120)
 );
 
 CREATE TABLE IF NOT EXISTS lot(
