@@ -30,11 +30,11 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String createUser(@ModelAttribute("user") UserDto userDto,
+    public String createUser(@ModelAttribute("user") @Valid UserDto userDto,
                              Errors errors, Model model) {
-//        if (errors.hasErrors()) {
-//            return "registration";
-//        }
+        if (errors.hasErrors()) {
+            return "registration";
+        }
 
         try {
             userService.create(userDto);

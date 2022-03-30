@@ -1,6 +1,12 @@
 package com.starlight.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.*;
 
 @Data
 @Builder
@@ -9,10 +15,16 @@ import lombok.*;
 public class LotDto {
 
     private Long id;
+    @Size(min = 2, max = 15, message = "Lot name should contain min 3 and max 15 characters")
     private String lotName;
     private String lotOwner;
+    @NotNull(message = "Start bid should not be empty")
+    @Positive(message = "Start bid should be not negative integer number")
+    @Digits(integer=6, fraction=0, message = "Bid should be less than 1 000 000")
     private Integer startBid;
     private Integer statusId;
+    @NotBlank(message = "Sale term should not be empty")
+    @DateTimeFormat(pattern = "HH-mm")
     private String saleTerm;
     private String lotBuyer;
     private Integer userBid;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>Market</title>
@@ -22,26 +22,30 @@
         <div class="market-first-section">
 
             <div class="add-new-lot p-t-50 p-b-90">
-                <form class="login100-form validate-form flex-sb flex-w" th:method="post" th:action="@{/market/new-lot}">
+                <form class="login100-form validate-form flex-sb flex-w" th:method="post" th:action="@{/market/new-lot}" th:object="${lotDto}">
 
                     <div class="wrap-input100 validate-input m-b-16">
-                        <input class="input100" type="text" name="lotName" placeholder="Lot name" required>
+                        <input class="input100" type="text" th:field="*{lotName}" placeholder="Lot name">
                         <span class="focus-input100"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input m-b-16">
-                        <input class="input100" type="text" name="bid" placeholder="Start bid" required>
+                        <input class="input100" type="text" th:field="*{startBid}" placeholder="Start bid">
                         <span class="focus-input100"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input m-b-16">
-                        <input class="input100" type="time" name="term" placeholder="Sale term" required>
+                        <input class="input100" type="time" th:field="*{saleTerm}" placeholder="Sale term">
                         <span class="focus-input100"></span>
                     </div>
 
                     <div class="container-login100-form-btn m-t-17">
                         <button class="login100-form-btn">ADD</button>
                     </div>
+
+                    <span class="alert-message" th:each="error : ${#fields.errors('lotName')}" th:text="${error}">Validation error</span>
+                    <span class="alert-message" th:each="error : ${#fields.errors('startBid')}" th:text="${error}">Validation error</span>
+                    <span class="alert-message" th:each="error : ${#fields.errors('saleTerm')}" th:text="${error}">Validation error</span>
 
                 </form>
             </div>

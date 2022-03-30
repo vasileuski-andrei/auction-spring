@@ -5,8 +5,13 @@ import com.starlight.service.LotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -22,26 +27,23 @@ public class MarketController {
     }
 
     @GetMapping
-    public String getMarketPage(Model model) {
+    public String getMarketPage(@ModelAttribute("lotDto") LotDto lotDto, Model model) {
         List<LotDto> lots = lotService.getAllLot();
         model.addAttribute("lots", lots);
         return "market";
     }
 
+
     @PostMapping("/new-lot")
-    public String addNewLot(@RequestParam("lotName") String lotName,
-                            @RequestParam("bid") String bid,
-                            @RequestParam("term") String term, Principal principal) {
+    public String addNewLot(@ModelAttribute("lotDto") @Valid LotDto lotDto, Errors errors, Principal principal) {
 
-        System.out.println();
+        if (errors.hasErrors()) {
+            return "market";
+        }
 
-        var lotDto = LotDto.builder()
-                .lotName(lotName)
-                .startBid(Integer.parseInt(bid))
-                .lotOwner(principal.getName())
-                .statusId(1)
-                .saleTerm(term)
-                .build();
+        lotDto.setLotOwner(principal.getName());
+        lotDto.setStatusId(1);
+
         lotService.create(lotDto);
         return "redirect:/market";
     }
