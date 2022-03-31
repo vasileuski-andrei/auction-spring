@@ -25,6 +25,6 @@ public interface LotRepository extends JpaRepository<Lot, Long> {
     @Transactional
     @Query("UPDATE Lot l SET l.statusId = :#{#lot.statusId}, l.lotBuyer = :#{#lot.lotBuyer} " +
             "WHERE l.id = :#{#lot.id}")
-    void updateLot(@Param("lot") Lot lot);
+    Integer updateLot(@Param("lot") Lot lot);
 
 }

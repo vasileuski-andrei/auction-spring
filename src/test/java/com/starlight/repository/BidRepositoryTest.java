@@ -2,6 +2,7 @@ package com.starlight.repository;
 
 import com.starlight.dto.BidDto;
 import com.starlight.model.Bid;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
@@ -20,19 +22,10 @@ class BidRepositoryTest {
     @Autowired
     private BidRepository bidRepository;
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
     void findLotBidsByIdTest() {
-        List<BidDto> list = bidRepository.findLotBidsById(1L);
-        System.out.println(list);
-        assertFalse(list.isEmpty());
+        List<BidDto> listBidDto = bidRepository.findLotBidsById(1L);
+        assertThat(listBidDto).isNotEmpty();
     }
 
     @Test
@@ -43,6 +36,6 @@ class BidRepositoryTest {
                 .username("TestUser")
                 .userBid(2)
                 .build();
-        assertEquals(1, bidRepository.addBid(bid));
+        assertThat(bidRepository.addBid(bid)).isEqualTo(1);
     }
 }
