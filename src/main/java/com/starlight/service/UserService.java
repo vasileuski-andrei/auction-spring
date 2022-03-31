@@ -51,7 +51,7 @@ public class UserService implements CommonService<UserDto, Long> {
 
         String activationMessage = String.format("""
                 Hello, %s.
-                Welcome to Auction. Please, visit this link to activate your account: %s%s
+                Welcome to Starlight auction. Please, visit this link to activate your account: %s%s
                 """, user.getUsername(), ACTIVATION_ACCOUNT_URL, user.getActivationCode());
 
         mailSenderService.sendMail(user.getEmail(), "Account activation", activationMessage);
@@ -100,4 +100,5 @@ public class UserService implements CommonService<UserDto, Long> {
     private User convertToUser(UserDto userDto) {
         return modelMapper.map(userDto, User.class);
     }
+
 }

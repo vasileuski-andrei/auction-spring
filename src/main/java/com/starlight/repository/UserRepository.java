@@ -9,18 +9,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findByUsername(String username);
-
     User findByEmailOrUsername(String email, String username);
+
+    User findUserByActivationCode(String code);
+
+    @Query(value = "SELECT u.password FROM users as u WHERE u.username = :username", nativeQuery = true)
+    String findPasswordByUsername(@Param("username") String username);
+
+    @Query(value = "SELECT u.id, u.username, u.birth_date, u.email, u.password, u.role, u.user_status, u.activation_code " +
+            "FROM users u " +
+            "WHERE u.username=:username AND u.activation_code is null", nativeQuery = true)
+    User findByUsername(@Param("username")String username);
 
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM users as u WHERE u.username = :username", nativeQuery = true)
     void deleteUserByUsername(@Param("username")String username);
 
-    @Query(value = "SELECT u.password FROM users as u WHERE u.username = :username", nativeQuery = true)
-    String findPasswordByUsername(@Param("username") String username);
-
-
-    User findUserByActivationCode(String code);
 }

@@ -1,7 +1,5 @@
 package com.starlight.service;
 
-import com.starlight.exception.BidInARowException;
-import com.starlight.exception.OwnerBidException;
 import com.starlight.exception.UserAlreadyExistException;
 import com.starlight.exception.ValidationException;
 
