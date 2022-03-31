@@ -22,6 +22,32 @@
         <div class="first-section">
 
             <div class="wrap-login100 p-t-50 p-b-90">
+                <form class="login100-form validate-form flex-sb flex-w" th:method="post" th:action="@{/user-profile/change-password}" th:object="${userDto}">
+
+                    <div class="wrap-input100 validate-input m-b-16">
+                        <input class="input100" type="password" name="oldPassword" placeholder="Password" required>
+                        <span class="focus-input100"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-16">
+                        <input class="input100" type="password" th:field="*{password}" placeholder="New password" required>
+                        <span class="focus-input100"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-16">
+                        <input class="input100" type="password" th:field="*{passwordConfirmation}" placeholder="New password confirmation" required>
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="container-login100-form-btn m-t-17">
+                        <button class="login100-form-btn">Change password</button>
+                    </div>
+
+                    <span class="unsuccess-alert-message" th:if="${errorMessage}" role="alert" th:text="${errorMessage}"></span>
+                    <span class="success-alert-message" th:if="${message}" role="alert" th:text="${message}"></span>
+
+                </form>
+            </div>
+
+            <div class="wrap-login100 p-t-50 p-b-90">
                 <form class="login100-form validate-form flex-sb flex-w" th:method="post" th:action="@{/user-profile/delete-account}">
 
                     <div class="wrap-input100 validate-input m-b-16">
@@ -33,10 +59,13 @@
                         <button class="login100-form-btn">Delete account</button>
                     </div>
 
-                    <span class="alert-message" th:if="${errorMessage}" role="alert" th:text="${errorMessage}"></span>
+                    <span class="unsuccess-alert-message" th:if="${errorMessage}" role="alert" th:text="${errorMessage}"></span>
 
                 </form>
             </div>
+
+            <span class="unsuccess-alert-message" th:if="${errorMessage}" role="alert" th:text="${errorMessage}"></span>
+            <span class="success-alert-message" th:if="${message}" role="alert" th:text="${message}"></span>
 
 
         </div>

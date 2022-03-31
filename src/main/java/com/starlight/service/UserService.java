@@ -65,10 +65,6 @@ public class UserService implements CommonService<UserDto, Long> {
         return true;
     }
 
-    private boolean emailOrUsernameExist(UserDto userDto) {
-        return userRepository.findByEmailOrUsername(userDto.getEmail(), userDto.getUsername()) != null;
-    }
-
     @Override
     public UserDto findById(Long value) {
         return null;
@@ -85,10 +81,7 @@ public class UserService implements CommonService<UserDto, Long> {
     }
 
     public void deleteByUsername(String username, String password) throws ValidationException, DataIntegrityViolationException {
-        var passwordByUsername = userRepository.findPasswordByUsername(username);
-        if (!securityConfig.passwordEncoder().matches(password, passwordByUsername)) {
-            throw new ValidationException("Incorrect password");
-        }
+        checkUserPassword(username, password);
         userRepository.deleteUserByUsername(username);
     }
 
@@ -97,8 +90,29 @@ public class UserService implements CommonService<UserDto, Long> {
         return null;
     }
 
+    public void changePassword(String oldPassword, UserDto userDto) throws ValidationException {
+        var username = userDto.getUsername();
+        checkUserPassword(username, oldPassword);
+
+        if (userDto.getPassword().equals(userDto.getPasswordConfirmation())) {
+            var encodeUserPassword = securityConfig.passwordEncoder().encode(userDto.getPassword());
+            userRepository.changeUserPasswordByUsername(username, encodeUserPassword);
+        }
+    }
+
+    private boolean emailOrUsernameExist(UserDto userDto) {
+        return userRepository.findByEmailOrUsername(userDto.getEmail(), userDto.getUsername()) != null;
+    }
+
     private User convertToUser(UserDto userDto) {
         return modelMapper.map(userDto, User.class);
     }
 
+    private void checkUserPassword(String username, String password) throws ValidationException {
+        var passwordFromDb = userRepository.findPasswordByUsername(username);
+        if (!securityConfig.passwordEncoder().matches(password, passwordFromDb)) {
+            throw new ValidationException("Incorrect password");
+        }
+
+    }
 }

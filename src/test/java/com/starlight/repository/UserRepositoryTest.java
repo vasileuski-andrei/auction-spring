@@ -1,6 +1,5 @@
 package com.starlight.repository;
 
-import com.starlight.model.Lot;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +22,11 @@ class UserRepositoryTest {
     @Test
     void deleteUserByUsernameTest() {
         assertThat(userRepository.deleteUserByUsername("TestUser")).isEqualTo(1);
+    }
+
+    @Test
+    void changeUserPasswordByUsernameTest() {
+        assertThat(userRepository.changeUserPasswordByUsername("TestUser", "pass")).isEqualTo(1);
     }
 
 }
