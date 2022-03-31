@@ -22,7 +22,7 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
     @Transactional
     @Query(value = "INSERT INTO bid (lot_name, lot_id, username, user_bid)" +
             "VALUES (:#{#bid.lotName}, :#{#bid.lotId}, :#{#bid.username}, :#{#bid.userBid})", nativeQuery = true)
-    void addData(@Param("bid") Bid bid);
+    Integer addBid(@Param("bid") Bid bid);
 
 
 }

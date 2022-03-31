@@ -35,6 +35,8 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.postgresql:postgresql'
 	implementation 'org.modelmapper:modelmapper:3.1.0'
+	testImplementation 'org.mockito:mockito-core:4.4.0'
+
 
 }
 

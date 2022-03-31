@@ -32,7 +32,7 @@ public class BidService implements CommonService<BidDto, Long> {
     public void create(BidDto model) throws ValidationException {
         bidValidator.validateData(model);
 
-        bidRepository.addData(convertToBid(model));
+        bidRepository.addBid(convertToBid(model));
         lastBids.put(model.getLotId(), model.getUsername());
 
     }
