@@ -50,7 +50,7 @@ public class RegistrationController {
     @GetMapping("/activate/{code}")
     public String accountActivate(@PathVariable String code, Model model) {
         if (userService.isUserAccountActivated(code)) {
-            model.addAttribute("successMessage", "Your account has been activated successfully");
+            model.addAttribute("successMessage", "Your account has been successfully activated");
         } else {
             model.addAttribute("unsuccessMessage", "Activation code is not found");
         }

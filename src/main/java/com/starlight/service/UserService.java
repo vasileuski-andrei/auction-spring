@@ -9,6 +9,7 @@ import com.starlight.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import static com.starlight.model.enums.Role.USER;
 import static com.starlight.model.enums.UserStatus.ACTIVE;
 
 @Service
+@PropertySource("classpath:/mail.properties")
 public class UserService implements CommonService<UserDto, Long> {
 
     private final SecurityConfig securityConfig;
