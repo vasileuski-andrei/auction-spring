@@ -82,9 +82,10 @@ public class UserService implements CommonService<UserDto, Long> {
 
     }
 
-    public void deleteByUsername(String username, String password) throws ValidationException, DataIntegrityViolationException {
+    public Integer deleteByUsername(String username, String password) throws ValidationException, DataIntegrityViolationException {
         checkUserPassword(username, password);
-        userRepository.deleteUserByUsername(username);
+        var deleteUserResult = userRepository.deleteUserByUsername(username);
+        return deleteUserResult;
     }
 
     @Override
@@ -102,19 +103,20 @@ public class UserService implements CommonService<UserDto, Long> {
         }
     }
 
-    private boolean emailOrUsernameExist(UserDto userDto) {
+    public boolean emailOrUsernameExist(UserDto userDto) {
         return userRepository.findByEmailOrUsername(userDto.getEmail(), userDto.getUsername()) != null;
     }
 
-    private User convertToUser(UserDto userDto) {
-        return modelMapper.map(userDto, User.class);
-    }
-
-    private void checkUserPassword(String username, String password) throws ValidationException {
+    public boolean checkUserPassword(String username, String password) throws ValidationException {
         var passwordFromDb = userRepository.findPasswordByUsername(username);
         if (!securityConfig.passwordEncoder().matches(password, passwordFromDb)) {
             throw new ValidationException("Incorrect password");
         }
 
+        return true;
+    }
+
+    private User convertToUser(UserDto userDto) {
+        return modelMapper.map(userDto, User.class);
     }
 }
