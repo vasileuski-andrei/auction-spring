@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
     <link rel="stylesheet" th:href="@{/css/util.css}"/>
     <link rel="stylesheet" th:href="@{/css/normalize.css}"/>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -53,11 +54,15 @@
                         <button class="login100-form-btn" type="submit">Sign up</button>
                     </div>
 
+                    <div>
+                        <div class="g-recaptcha" data-sitekey="6LdsY0kfAAAAAMRhavYuUBG9YwXsjV6ULonfZ8wB"></div>
+                    </div>
+
                     <span class="alert-message" th:each="error : ${#fields.errors('username')}" th:text="${error}">Validation error</span>
                     <span class="alert-message" th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation error</span>
                     <span class="alert-message" th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation error</span>
 
-                    <span class="alert-message" th:if="${errorMessage}" role="alert" th:text="${errorMessage}"></span>
+                    <span class="unsuccess-alert-message" th:if="${errorMessage}" role="alert" th:text="${errorMessage}"></span>
 
                 </form>
 
