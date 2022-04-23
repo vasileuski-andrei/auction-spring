@@ -15,7 +15,7 @@ import javax.validation.constraints.*;
 public class LotDto {
 
     private Long id;
-    @Size(min = 2, max = 15, message = "Lot name should contain min 3 and max 15 characters")
+    @Size(min = 2, max = 50, message = "Lot name should contain min 3 and max 50 characters")
     private String lotName;
     private String lotOwner;
     @NotNull(message = "Start bid should not be empty")
@@ -28,14 +28,16 @@ public class LotDto {
     private String saleTerm;
     private String lotBuyer;
     private Integer userBid;
+    private String username;
 
-    public LotDto(Long id, String lotName, String lotOwner, Integer startBid, Integer statusId, String lotBuyer, Integer userBid) {
+    public LotDto(Long id, String lotName, String lotOwner, Integer startBid, Integer statusId, String lotBuyer, String username, Integer userBid) {
         this.id = id;
         this.lotName = lotName;
         this.lotOwner = lotOwner;
         this.startBid = startBid;
         this.statusId = statusId;
         this.lotBuyer = lotBuyer;
+        this.username = username;
         this.userBid = userBid;
     }
 }

@@ -14,10 +14,10 @@ import java.util.List;
 @Repository
 public interface LotRepository extends JpaRepository<Lot, Long> {
 
-    @Query("SELECT new com.starlight.dto.LotDto(l.id, l.lotName, l.lotOwner, l.startBid, l.statusId, l.lotBuyer, MAX(b.userBid)) " +
+    @Query("SELECT new com.starlight.dto.LotDto(l.id, l.lotName, l.lotOwner, l.startBid, l.statusId, l.lotBuyer, b.username, MAX(b.userBid)) " +
             "FROM Lot l " +
             "LEFT JOIN Bid b ON l.id = b.lotId " +
-            "GROUP BY l.id " +
+            "GROUP BY l.id, b.username " +
             "ORDER BY l.id DESC")
     List<LotDto> findAllLot();
 

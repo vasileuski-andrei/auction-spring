@@ -33,7 +33,6 @@ public class MarketController {
         return "market";
     }
 
-
     @PostMapping("/new-lot")
     public String addNewLot(@ModelAttribute("lotDto") @Valid LotDto lotDto, Errors errors, Principal principal) {
 

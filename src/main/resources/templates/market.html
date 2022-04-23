@@ -66,13 +66,11 @@
                             <td th:text="${lot.id}"></td>
                             <td> <a th:text="${lot.lotName}" th:href="@{/lot/{id}(id=${lot.getId()})}"></a></td>
                             <td th:text="${lot.lotOwner}"></td>
-                            <td th:text="${lot.startBid}"></td>
-<!--                            <td th:text="${lot.userBid}"></td>-->
-
+                            <td th:text="${lot.startBid} + ' $'"></td>
                             <td>
-                                <div th:text="${lot.userBid}"></div>
-<!--                                <div class="name-of-user-in-last-bid-column" th:text="${lot.}"></div>-->
-
+                                <div th:text="${lot.userBid} + ' $'"></div>
+                                <div class="name-of-user-in-last-bid-column" th:text="${lot.username}"></div>
+<!--                                <div class="name-of-user-in-last-bid-column">Name</div>-->
                             </td>
 
 
