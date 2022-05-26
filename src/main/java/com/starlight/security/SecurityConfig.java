@@ -1,4 +1,4 @@
-package com.starlight.config.security;
+package com.starlight.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,21 +33,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf()
                     .disable()
-                .authorizeRequests()
-                    .antMatchers("/index").permitAll()
-                    .antMatchers("/market", "/user-profile", "/lot/**").fullyAuthenticated()
-                    .antMatchers("/registration").not().fullyAuthenticated()
-                    .antMatchers("/login").not().fullyAuthenticated()
-                .and()
-                    .formLogin()
-                    .loginPage("/login").permitAll()
-                    .defaultSuccessUrl("/market")
-                .and()
-                    .logout()
+                .authorizeHttpRequests(urlConfig -> urlConfig
+                                .antMatchers("/index", "/login", "/registration").permitAll()
+                                .antMatchers("/market", "/user-profile", "/lot/**").authenticated()
+                )
+                .formLogin(login -> login
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/market"))
+                .logout(logout -> logout
                     .invalidateHttpSession(true)
                     .clearAuthentication(true)
                     .deleteCookies("JSESSIONID")
-                    .logoutSuccessUrl("/login");
+                    .logoutSuccessUrl("/login"));
 
     }
 

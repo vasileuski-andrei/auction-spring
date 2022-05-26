@@ -1,6 +1,6 @@
 package com.starlight.service;
 
-import com.starlight.config.security.SecurityConfig;
+import com.starlight.security.SecurityConfig;
 import com.starlight.dto.UserDto;
 import com.starlight.exception.UserAlreadyExistException;
 import com.starlight.exception.ValidationException;
