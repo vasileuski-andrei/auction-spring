@@ -1,5 +1,6 @@
 package com.starlight.service;
 
+import com.starlight.security.PasswordEncoderConfig;
 import com.starlight.security.SecurityConfig;
 import com.starlight.dto.UserDto;
 import com.starlight.exception.ValidationException;
@@ -28,7 +29,7 @@ class UserServiceTest {
     @Mock
     private UserRepository userRepository;
     @Mock
-    private SecurityConfig securityConfig;
+    private PasswordEncoderConfig passwordEncoderConfig;
     @InjectMocks
     private UserService userService;
 
@@ -83,7 +84,7 @@ class UserServiceTest {
         doReturn(TEST_USER_PASSWORD_DB)
                 .when(userRepository).findPasswordByUsername(TEST_USER_USERNAME);
         doReturn(new BCryptPasswordEncoder(12))
-                .when(securityConfig).passwordEncoder();
+                .when(passwordEncoderConfig).passwordEncoder();
 
         var arePasswordsEqual = userService.checkUserPassword(TEST_USER_USERNAME, TEST_USER_PASSWORD);
         assertThat(arePasswordsEqual).isTrue();

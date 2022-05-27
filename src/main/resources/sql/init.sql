@@ -6,9 +6,9 @@ CREATE TABLE IF NOT EXISTS lot_status(
 CREATE TABLE IF NOT EXISTS users(
     id BIGSERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
-    birth_date DATE NOT NULL,
+    birth_date DATE,
     email VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(120) NOT NULL,
+    password VARCHAR(500) NOT NULL,
     role VARCHAR(50) NOT NULL,
     user_status VARCHAR(50) NOT NULL,
     activation_code VARCHAR(120)
