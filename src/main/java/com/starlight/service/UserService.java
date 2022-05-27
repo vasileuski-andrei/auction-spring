@@ -73,7 +73,7 @@ public class UserService implements CommonService<UserDto, Long> {
         mailSenderService.sendMail(user.getEmail(), "Your password", generatedUserPassword);
     }
 
-    public boolean isUserAccountActivated(String code) {
+    public boolean isActivationCodePresent(String code) {
         User user = userRepository.findUserByActivationCode(code);
         if (user == null) return false;
         user.setActivationCode(null);

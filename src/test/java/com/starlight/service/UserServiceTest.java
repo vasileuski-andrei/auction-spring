@@ -1,7 +1,6 @@
 package com.starlight.service;
 
 import com.starlight.security.PasswordEncoderConfig;
-import com.starlight.security.SecurityConfig;
 import com.starlight.dto.UserDto;
 import com.starlight.exception.ValidationException;
 import com.starlight.model.User;
@@ -14,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.doReturn;
 
 @Transactional
@@ -66,7 +66,7 @@ class UserServiceTest {
         doReturn(new User())
                 .when(userRepository).findUserByActivationCode(TEST_USER_CODE);
 
-        var isActivationCodePresent = userService.isUserAccountActivated(TEST_USER_CODE);
+        var isActivationCodePresent = userService.isActivationCodePresent(TEST_USER_CODE);
         assertThat(isActivationCodePresent).isTrue();
     }
 
@@ -75,7 +75,7 @@ class UserServiceTest {
         doReturn(null)
                 .when(userRepository).findUserByActivationCode(TEST_USER_CODE);
 
-        var isActivationCodePresent = userService.isUserAccountActivated(TEST_USER_CODE);
+        var isActivationCodePresent = userService.isActivationCodePresent(TEST_USER_CODE);
         assertThat(isActivationCodePresent).isFalse();
     }
 
@@ -88,6 +88,47 @@ class UserServiceTest {
 
         var arePasswordsEqual = userService.checkUserPassword(TEST_USER_USERNAME, TEST_USER_PASSWORD);
         assertThat(arePasswordsEqual).isTrue();
+    }
+
+    @Test
+    public void userIsPresent() {
+        doReturn(new User())
+                .when(userRepository).findByEmail(any());
+
+        var result = userService.isUserExist(any());
+        assertThat(result).isTrue();
+        verify(userRepository).findByEmail(any());
+    }
+
+    @Test
+    public void userIsNotPresent() {
+        doReturn(null)
+                .when(userRepository).findByEmail(any());
+
+        var result = userService.isUserExist(any());
+        assertThat(result).isFalse();
+        verify(userRepository).findByEmail(any());
+    }
+
+    @Test
+    public void activationCodeIsPresent() {
+        doReturn(new User())
+                .when(userRepository).findUserByActivationCode(any());
+
+        var result = userService.isActivationCodePresent(any());
+        assertThat(result).isTrue();
+        verify(userRepository).findUserByActivationCode(any());
+
+    }
+
+    @Test
+    public void activationCodeIsNotPresent() {
+        doReturn(null)
+                .when(userRepository).findUserByActivationCode(any());
+
+        var result = userService.isActivationCodePresent(any());
+        assertThat(result).isFalse();
+        verify(userRepository).findUserByActivationCode(any());
     }
 
 }
