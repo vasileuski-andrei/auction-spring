@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .disable()
                 .authorizeHttpRequests(urlConfig -> urlConfig
                                 .antMatchers("/index", "/login", "/registration").permitAll()
-                                .antMatchers("/market/new-lot", "/user-profile", "/lot/**").authenticated()
+                                .antMatchers("/market/**", "/user-profile/**", "/lot/**").authenticated()
                 )
                 .logout(logout -> logout
                         .invalidateHttpSession(true)

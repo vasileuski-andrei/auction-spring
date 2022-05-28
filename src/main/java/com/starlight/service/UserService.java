@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.stereotype.Service;
 
@@ -98,8 +99,7 @@ public class UserService implements CommonService<UserDto, Long> {
 
     public Integer deleteByUsername(String username, String password) throws ValidationException, DataIntegrityViolationException {
         checkUserPassword(username, password);
-        var deleteUserResult = userRepository.deleteUserByUsername(username);
-        return deleteUserResult;
+        return userRepository.deleteUserByUsername(username);
     }
 
     @Override
