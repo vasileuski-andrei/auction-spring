@@ -42,26 +42,6 @@ public class LotService implements CommonService<LotDto, Integer> {
         runLotCountdown(savedLot.getId(), lotDto.getSaleTerm());
     }
 
-    @Override
-    public LotDto findById(Integer value) {
-        return null;
-    }
-
-    @Override
-    public LotDto update(LotDto model) {
-        return null;
-    }
-
-    @Override
-    public void delete(Integer value) {
-
-    }
-
-    @Override
-    public List<LotDto> getAll() {
-        return null;
-    }
-
     public List<LotDto> getAllLot() {
         var allLotsDto = lotRepository.findAllLot();
         if (lotCountdown.size() != 0) {

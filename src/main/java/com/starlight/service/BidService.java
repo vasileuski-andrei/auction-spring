@@ -39,26 +39,6 @@ public class BidService implements CommonService<BidDto, Long> {
         lastBids.put(model.getLotId(), model.getUsername());
     }
 
-    @Override
-    public BidDto findById(Long value) {
-        return null;
-    }
-
-    @Override
-    public BidDto update(BidDto model) {
-        return null;
-    }
-
-    @Override
-    public void delete(Long value) {
-
-    }
-
-    @Override
-    public List<BidDto> getAll() {
-        return null;
-    }
-
     public List<BidDto> findLotBidsById(Long id) {
         return bidRepository.findLotBidsById(id);
     }

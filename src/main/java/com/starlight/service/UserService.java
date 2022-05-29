@@ -11,11 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 import static com.starlight.model.enums.Role.USER;
@@ -82,29 +80,9 @@ public class UserService implements CommonService<UserDto, Long> {
         return true;
     }
 
-    @Override
-    public UserDto findById(Long value) {
-        return null;
-    }
-
-    @Override
-    public UserDto update(UserDto model) {
-        return null;
-    }
-
-    @Override
-    public void delete(Long value) {
-
-    }
-
     public Integer deleteByUsername(String username, String password) throws ValidationException, DataIntegrityViolationException {
         checkUserPassword(username, password);
         return userRepository.deleteUserByUsername(username);
-    }
-
-    @Override
-    public List<UserDto> getAll() {
-        return null;
     }
 
     public void changePassword(String oldPassword, UserDto userDto) throws ValidationException {
