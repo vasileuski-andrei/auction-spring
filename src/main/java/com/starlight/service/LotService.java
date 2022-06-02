@@ -44,6 +44,11 @@ public class LotService implements CommonService<LotDto, Integer> {
 
     public List<LotDto> getAllLot() {
         var allLotsDto = lotRepository.findAllLot();
+        setCurrentSaleTime(allLotsDto);
+        return allLotsDto;
+    }
+
+    private void setCurrentSaleTime(List<LotDto> allLotsDto) {
         if (lotCountdown.size() != 0) {
             for (LotDto lotDto : allLotsDto) {
                 LotCountdown currentLotCountdown = lotCountdown.get(lotDto.getId());
@@ -53,18 +58,6 @@ public class LotService implements CommonService<LotDto, Integer> {
                 }
             }
         }
-
-        return allLotsDto;
-    }
-
-    private void runLotCountdown(Long lotId, String saleTerm) {
-        LotCountdown currentLotCountdown = applicationContext.getBean(LotCountdown.class);
-        lotCountdown.put(lotId, currentLotCountdown);
-        currentLotCountdown.startTimer(lotId, LocalTime.parse(saleTerm).toSecondOfDay());
-    }
-
-    private Lot convertToLot(LotDto lotDto) {
-        return modelMapper.map(lotDto, Lot.class);
     }
 
     public void changeLotStatus(Long lotId) {
@@ -92,6 +85,16 @@ public class LotService implements CommonService<LotDto, Integer> {
 
     public boolean isTheLotStillSale(Long id) {
         return lotCountdown.containsKey(id);
+    }
+
+    private void runLotCountdown(Long lotId, String saleTerm) {
+        LotCountdown currentLotCountdown = applicationContext.getBean(LotCountdown.class);
+        lotCountdown.put(lotId, currentLotCountdown);
+        currentLotCountdown.startTimer(lotId, LocalTime.parse(saleTerm).toSecondOfDay());
+    }
+
+    private Lot convertToLot(LotDto lotDto) {
+        return modelMapper.map(lotDto, Lot.class);
     }
 
 }

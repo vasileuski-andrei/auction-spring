@@ -43,12 +43,12 @@ public class BidService implements CommonService<BidDto, Long> {
         return bidRepository.findLotBidsById(id);
     }
 
-    private Bid convertToBid(BidDto bidDto) {
-        return modelMapper.map(bidDto, Bid.class);
-    }
-
     public Map<Long, String> getLastBids() {
         return lastBids;
+    }
+
+    private Bid convertToBid(BidDto bidDto) {
+        return modelMapper.map(bidDto, Bid.class);
     }
 
 }
