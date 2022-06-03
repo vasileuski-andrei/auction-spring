@@ -1,2 +1,2 @@
 FROM postgres:latest
-COPY init.sql /docker-entrypoint-initdb.d/init.sql
+COPY db.changelog-1.0.sql /docker-entrypoint-initdb.d/db.changelog-1.0.sql
