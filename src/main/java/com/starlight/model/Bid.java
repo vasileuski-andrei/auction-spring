@@ -19,7 +19,7 @@ public class Bid {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String lotName;
     private Long lotId;
     private String username;

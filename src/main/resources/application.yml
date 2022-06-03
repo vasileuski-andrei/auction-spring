@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/auction-db
+    username: postgres
+    password: pass
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties.hibernate:
+      show_sql: true
+      format_sql: true
+      hbm2ddl.auto: validate
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 288062883120-vgamcrmb5fql2njaft7r1cn34fpfc2qt.apps.googleusercontent.com
+            clientSecret: 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
+            redirectUri: http://localhost:8080/login/oauth2/code/google
+            scope: openid,email,profile
+
+recaptcha:
+  secret: 6LdsY0kfAAAAAEJcCEOy1WFWBBEtgN9xbWtQYlWd
