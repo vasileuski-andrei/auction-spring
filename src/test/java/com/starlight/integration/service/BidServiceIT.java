@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class BidServiceIT extends IntegrationTestBase {
 
-    private static final Long TEST_LOT_ID = 12L;
+    private static final Long TEST_LOT_ID = 1L;
 
     @Autowired
     private BidService bidService;

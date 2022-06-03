@@ -1,11 +1,7 @@
-#spring:
-#  datasource:
-#    username: postgres
-#    password: pass
-
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/auction-db
-    username: postgres
-    password: pass
-    driver-class-name: org.postgresql.Driver
+    username: test
+    password: test
+  jpa:
+    properties.hibernate:
+      hbm2ddl.auto: update

@@ -33,3 +33,8 @@ CREATE TABLE IF NOT EXISTS bid(
     user_bid INT,
     FOREIGN KEY (lot_id) REFERENCES lot(id)
 );
+
+INSERT INTO lot_status(id, lot_status)
+VALUES (1, 'SELL'),
+       (2, 'SOLD'),
+       (3, 'NOT_SOLD');
