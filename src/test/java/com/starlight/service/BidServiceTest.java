@@ -1,6 +1,7 @@
 package com.starlight.service;
 
 import com.starlight.dto.BidDto;
+import com.starlight.integration.IntegrationTestBase;
 import com.starlight.repository.BidRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
