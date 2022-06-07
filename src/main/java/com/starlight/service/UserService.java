@@ -51,12 +51,7 @@ public class UserService implements CommonService<UserDto, Long> {
         user.setActivationCode(UUID.randomUUID().toString());
         userRepository.save(user);
 
-        String activationMessage = String.format("""
-                Hello, %s.
-                Welcome to Starlight auction. Please, visit this link to activate your account: %s%s
-                """, user.getUsername(), ACTIVATION_ACCOUNT_URL, user.getActivationCode());
-
-        mailSenderService.sendMail(user.getEmail(), "Account activation", activationMessage);
+        sendActivationMessage(user);
     }
 
     public void createOAuth2User(OidcIdToken idToken) {
@@ -110,6 +105,15 @@ public class UserService implements CommonService<UserDto, Long> {
         }
 
         return true;
+    }
+
+    private void sendActivationMessage(User user) {
+        String activationMessage = String.format("""
+                Hello, %s.
+                Welcome to Starlight auction. Please, visit this link to activate your account: %s%s
+                """, user.getUsername(), ACTIVATION_ACCOUNT_URL, user.getActivationCode());
+
+        mailSenderService.sendMail(user.getEmail(), "Account activation", activationMessage);
     }
 
     private User convertToUser(UserDto userDto) {
