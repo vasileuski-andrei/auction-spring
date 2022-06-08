@@ -5,6 +5,7 @@ import com.starlight.exception.UserAlreadyExistException;
 import com.starlight.exception.ValidationException;
 import com.starlight.integration.IntegrationTestBase;
 import com.starlight.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.anyString;
 
+@RequiredArgsConstructor
 public class UserServiceIT extends IntegrationTestBase {
 
     private static final String TEST_USER3 = "TestUser3";
@@ -25,8 +27,7 @@ public class UserServiceIT extends IntegrationTestBase {
     private static final String TEST_CODE = "503243233";
     private static UserDto userDto;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @BeforeAll
     static void init() {

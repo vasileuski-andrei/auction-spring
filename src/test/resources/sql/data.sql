@@ -6,7 +6,8 @@ VALUES(1, 'admin', '2022-03-11', 'admin@admin.com', '$2a$12$o3lI0qeOG9h.B7RFkoUD
 SELECT SETVAL('users_id_seq', (SELECT MAX(id) FROM users));
 
 INSERT INTO lot(id, lot_name, lot_owner, start_bid, status_id)
-VALUES(1, 'TestLot', 'admin', 1, 1);
+VALUES(1, 'TestLot', 'admin', 1, 1),
+      (2, 'TestLot2', 'admin', 1, 1);
 SELECT SETVAL('lot_id_seq', (SELECT MAX(id) FROM lot));
 
 INSERT INTO bid(id, lot_name, lot_id, username, user_bid)

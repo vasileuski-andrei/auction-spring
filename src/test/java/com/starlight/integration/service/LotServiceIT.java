@@ -3,6 +3,7 @@ package com.starlight.integration.service;
 import com.starlight.dto.LotDto;
 import com.starlight.integration.IntegrationTestBase;
 import com.starlight.service.LotService;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,17 +11,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@RequiredArgsConstructor
 class LotServiceIT extends IntegrationTestBase {
 
     private static final Long TEST_LOT_ID = 1L;
+    private static final Long TEST_LOT2_ID = 2L;
     private static final String TEST_LOT_NAME = "TestLot2";
     private static final String TEST_LOT_OWNER = "admin";
     private static final Integer TEST_START_BID = 1;
     private static final String TEST_SALE_TERM = "12:00";
     private static final Integer TEST_LOT_STATUS = 1;
 
-    @Autowired
-    LotService lotService;
+    private final LotService lotService;
 
     @Test
     void successfullyCreateNewLotTest() {
@@ -54,7 +56,7 @@ class LotServiceIT extends IntegrationTestBase {
 
     @Test
     void lotSaleTimeIsExpiredTest() {
-        assertThat(lotService.isTheLotStillSale(TEST_LOT_ID)).isFalse();
+        assertThat(lotService.isTheLotStillSale(TEST_LOT2_ID)).isFalse();
     }
 
 }

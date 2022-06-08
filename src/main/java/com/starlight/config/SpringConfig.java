@@ -20,5 +20,4 @@ public class SpringConfig {
         return new SpringSecurityDialect();
     }
 
-
 }

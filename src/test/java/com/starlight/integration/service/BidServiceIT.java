@@ -6,6 +6,7 @@ import com.starlight.integration.IntegrationTestBase;
 import com.starlight.service.BidService;
 import com.starlight.service.LotService;
 import com.starlight.util.LotCountdown;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+@RequiredArgsConstructor
 public class BidServiceIT extends IntegrationTestBase {
 
     private static final Long TEST_LOT_ID = 1L;
@@ -25,10 +27,8 @@ public class BidServiceIT extends IntegrationTestBase {
     private static final Integer TEST_START_BID = 1;
     private static BidDto bidDto;
 
-    @Autowired
-    private BidService bidService;
-    @Autowired
-    private LotService lotService;
+    private final BidService bidService;
+    private final LotService lotService;
 
     @BeforeAll
     static void init() {
