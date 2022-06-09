@@ -5,12 +5,11 @@ import com.starlight.exception.ValidationException;
 import com.starlight.integration.IntegrationTestBase;
 import com.starlight.service.BidService;
 import com.starlight.service.LotService;
-import com.starlight.util.LotCountdown;
+import com.starlight.service.LotCountdown;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 

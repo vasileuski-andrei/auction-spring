@@ -1,4 +1,4 @@
-package com.starlight.util;
+package com.starlight.service;
 
 import com.starlight.service.LotService;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,6 @@ import java.util.TimerTask;
 @Component
 @Scope("prototype")
 public class LotCountdown implements Runnable {
-
 
     private LotService lotService;
 

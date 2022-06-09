@@ -8,4 +8,5 @@ place a bid, delete account, change password, captcha, db migration, unit and in
 [![imageup.ru](https://imageup.ru/img242/thumb/market3942061.jpg)](https://imageup.ru/img242/3942061/market.png.html)
 [![imageup.ru](https://imageup.ru/img76/thumb/registr3942059.jpg)](https://imageup.ru/img76/3942059/registr.png.html)
 [![imageup.ru](https://imageup.ru/img17/thumb/index3942060.jpg)](https://imageup.ru/img17/3942060/index.png.html)
+[![imageup.ru](https://imageup.ru/img116/thumb/login3952360.jpg)](https://imageup.ru/img116/3952360/login.png.html)
 

@@ -3,7 +3,6 @@ package com.starlight.service;
 import com.starlight.dto.LotDto;
 import com.starlight.model.Lot;
 import com.starlight.repository.LotRepository;
-import com.starlight.util.LotCountdown;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
