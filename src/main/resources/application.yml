@@ -19,6 +19,10 @@ spring:
             clientSecret: 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
             redirectUri: http://localhost:8080/login/oauth2/code/google
             scope: openid,email,profile
+  kafka:
+    consumer:
+      group-id: 1
+    bootstrap-servers: localhost:9092
 
 recaptcha:
   secret: 6LdsY0kfAAAAAEJcCEOy1WFWBBEtgN9xbWtQYlWd
