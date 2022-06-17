@@ -31,5 +31,6 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserStatus userStatus;
     private String activationCode;
+    private String telegramAccount;
 
 }

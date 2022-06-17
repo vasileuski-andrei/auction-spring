@@ -40,4 +40,5 @@ public class UserDto {
     @NotBlank(message = "Password confirmation should not be empty")
     private String passwordConfirmation;
     private String activationCode;
+    private String telegramAccount;
 }
