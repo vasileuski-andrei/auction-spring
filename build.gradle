@@ -36,6 +36,7 @@ dependencies {
 	implementation "org.modelmapper:modelmapper:${versions.modelmapper}"
 	implementation 'org.liquibase:liquibase-core'
 	implementation 'org.springframework.kafka:spring-kafka:2.8.6'
+	implementation "com.alibaba:fastjson:${versions.fastjson}"
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation "org.testcontainers:postgresql:${versions.testcontainers}"
