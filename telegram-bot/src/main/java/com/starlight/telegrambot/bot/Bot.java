@@ -21,6 +21,7 @@ public class Bot extends TelegramLongPollingBot {
     private KafkaTemplate<String, UserInfoDto> kafkaTemplate;
 
     private static final String TOPIC_NAME = "auction";
+    private String chatId = null;
 
     @Value("${spring.kafka.botname}")
     private String botname;
@@ -41,9 +42,10 @@ public class Bot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
         String messageText = message.getText();
+        chatId = message.getChatId().toString();
 
         if (messageText.equals("/start")) {
-            sendAnswer(message.getChatId().toString(), "Let's go");
+            sendAnswer("Let's go");
         } else if (messageText.equals("info")) {
             var listenableFuture = kafkaTemplate.send(TOPIC_NAME, buildUserInfoDto(message));
             listenableFuture.addCallback(System.out::println, System.err::println);
@@ -58,7 +60,7 @@ public class Bot extends TelegramLongPollingBot {
                 .build();
     }
 
-    public void sendAnswer(String chatId, String s) {
+    public void sendAnswer(String s) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);

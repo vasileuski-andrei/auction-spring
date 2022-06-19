@@ -1,4 +1,4 @@
-package com.starlight.telegrambot.config;
+package com.starlight.telegrambot.kafka;
 
 
 import com.starlight.telegrambot.dto.UserInfoDto;
