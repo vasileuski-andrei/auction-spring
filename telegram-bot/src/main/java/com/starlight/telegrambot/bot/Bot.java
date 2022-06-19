@@ -12,7 +12,13 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class Bot extends TelegramLongPollingBot {
@@ -21,7 +27,7 @@ public class Bot extends TelegramLongPollingBot {
     private KafkaTemplate<String, UserInfoDto> kafkaTemplate;
 
     private static final String TOPIC_NAME = "auction";
-    private String chatId = null;
+    private Message message = null;
 
     @Value("${spring.kafka.botname}")
     private String botname;
@@ -40,9 +46,8 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        Message message = update.getMessage();
+        message = update.getMessage();
         String messageText = message.getText();
-        chatId = message.getChatId().toString();
 
         if (messageText.equals("/start")) {
             sendAnswer("Let's go");
@@ -60,16 +65,37 @@ public class Bot extends TelegramLongPollingBot {
                 .build();
     }
 
-    public void sendAnswer(String s) {
+    public void sendAnswer(String answer) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
-        sendMessage.setChatId(chatId);
-        sendMessage.setText(s);
+        sendMessage.setChatId(message.getChatId().toString());
+        sendMessage.setReplyToMessageId(message.getMessageId());
+        sendMessage.setText(answer);
+
         try {
+            setButtons(sendMessage);
             execute(sendMessage);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setButtons(SendMessage sendMessage) {
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        sendMessage.setReplyMarkup(replyKeyboardMarkup);
+
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+
+        List<KeyboardRow> keyboardRowList = new ArrayList<>();
+        KeyboardRow keyboardRow = new KeyboardRow();
+        keyboardRow.add(new KeyboardButton("/settings"));
+        keyboardRow.add(new KeyboardButton("my lots"));
+        keyboardRow.add(new KeyboardButton("all lots"));
+        keyboardRowList.add(keyboardRow);
+        replyKeyboardMarkup.setKeyboard(keyboardRowList);
+
     }
 
 
