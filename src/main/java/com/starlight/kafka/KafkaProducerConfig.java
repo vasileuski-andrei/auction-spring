@@ -1,6 +1,7 @@
-package com.starlight.telegrambot.kafka;
+package com.starlight.kafka;
 
-import com.starlight.telegrambot.dto.UserInfoDto;
+
+import com.starlight.dto.UserInfoDto;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;

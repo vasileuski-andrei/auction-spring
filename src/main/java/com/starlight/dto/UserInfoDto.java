@@ -13,4 +13,8 @@ public class UserInfoDto {
 
     private String message;
     private String telegramAccount;
+    private Long id;
+    private String username;
+    private String birthDate;
+    private String email;
 }

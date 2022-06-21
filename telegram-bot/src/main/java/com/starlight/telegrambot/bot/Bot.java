@@ -1,13 +1,10 @@
 package com.starlight.telegrambot.bot;
 
 import com.starlight.telegrambot.dto.UserInfoDto;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
-import org.springframework.util.concurrent.ListenableFuture;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -51,11 +48,10 @@ public class Bot extends TelegramLongPollingBot {
 
         if (messageText.equals("/start")) {
             sendAnswer("Let's go");
-        } else if (messageText.equals("info")) {
+        } else {
             var listenableFuture = kafkaTemplate.send(TOPIC_NAME, buildUserInfoDto(message));
             listenableFuture.addCallback(System.out::println, System.err::println);
         }
-
     }
 
     private UserInfoDto buildUserInfoDto(Message message) {
@@ -90,13 +86,12 @@ public class Bot extends TelegramLongPollingBot {
 
         List<KeyboardRow> keyboardRowList = new ArrayList<>();
         KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add(new KeyboardButton("/settings"));
+        keyboardRow.add(new KeyboardButton("my info"));
         keyboardRow.add(new KeyboardButton("my lots"));
         keyboardRow.add(new KeyboardButton("all lots"));
         keyboardRowList.add(keyboardRow);
         replyKeyboardMarkup.setKeyboard(keyboardRowList);
 
     }
-
 
 }
