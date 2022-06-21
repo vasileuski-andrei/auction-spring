@@ -106,6 +106,10 @@ public class UserService {
         return true;
     }
 
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public User getUserByTelegramAccount(String tgAccount) {
         return userRepository.findByTelegramAccount(tgAccount);
     }

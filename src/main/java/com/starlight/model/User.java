@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Builder
@@ -32,5 +33,9 @@ public class User {
     private UserStatus userStatus;
     private String activationCode;
     private String telegramAccount;
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<Lot> lots;
 
 }

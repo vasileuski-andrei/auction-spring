@@ -19,13 +19,17 @@ public class Lot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String lotName;
-    private String lotOwner;
     private int startBid;
     private int statusId;
     private String lotBuyer;
+    private String lotOwner;
 
-    @OneToMany
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "lot_id")
-    List<Bid> bids;
+    private List<Bid> bids;
 
 }

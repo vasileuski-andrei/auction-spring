@@ -30,15 +30,18 @@ public class LotController {
     @GetMapping("/{id}")
     public String getLotPage(@PathVariable("id") Long id, Model model) {
         List<BidDto> lotBids= bidService.findLotBidsById(id);
-        var lastBidDto = lotBids.get(lotBids.size()-1);
+        if (lotBids != null) {
+            var lastBidDto = lotBids.get(lotBids.size()-1);
 
-        lotName = lastBidDto.getLotName();
-        lotOwner = lastBidDto.getLotOwner();
-        startBid = lastBidDto.getStartBid();
-        lastBid = lastBidDto.getUserBid();
-        lastUser = lastBidDto.getUsername();
+            lotName = lastBidDto.getLotName();
+            lotOwner = lastBidDto.getLotOwner();
+            startBid = lastBidDto.getStartBid();
+            lastBid = lastBidDto.getUserBid();
+            lastUser = lastBidDto.getUsername();
 
-        model.addAttribute("lotBids", lotBids);
+            model.addAttribute("lotBids", lotBids);
+        }
+
         return "lot";
     }
 
@@ -57,11 +60,12 @@ public class LotController {
                 .lastUser(lastUser)
                 .build();
 
+        System.out.println();
+
         try {
             bidService.create(bidDto);
         } catch (ValidationException e) {
             model.addAttribute("errorMessage", e.getDetail());
-            System.out.println(e.getDetail());
         }
 
         return "redirect:/lot/{id}";

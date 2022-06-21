@@ -23,6 +23,7 @@ import static com.starlight.model.enums.LotStatus.SOLD;
 public class LotService {
 
     private final ApplicationContext applicationContext;
+    private final UserService userService;
     private final LotRepository lotRepository;
     private final BidService bidService;
     private final ModelMapper modelMapper;
@@ -30,15 +31,18 @@ public class LotService {
     private final Map<Long, LotCountdown> lotCountdown = new ConcurrentHashMap<>();
 
     @Autowired
-    public LotService(ApplicationContext applicationContext, LotRepository lotRepository, ModelMapper modelMapper, BidService bidService) {
+    public LotService(ApplicationContext applicationContext, UserService userService,LotRepository lotRepository, ModelMapper modelMapper, BidService bidService) {
         this.applicationContext = applicationContext;
+        this.userService = userService;
         this.lotRepository = lotRepository;
         this.bidService = bidService;
         this.modelMapper = modelMapper;
     }
 
     public void create(LotDto lotDto) {
-        var savedLot = lotRepository.save(convertToLot(lotDto));
+        var lot = convertToLot(lotDto);
+        lot.setUser(userService.getUserByUsername(lotDto.getLotOwner()));
+        var savedLot = lotRepository.save(lot);
         runLotCountdown(savedLot.getId(), lotDto.getSaleTerm());
     }
 

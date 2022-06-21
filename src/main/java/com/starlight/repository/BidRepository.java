@@ -14,10 +14,4 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
 
     List<BidDto> findLotBidsById(@Param("id") Long id);
 
-    @Modifying
-    @Transactional
-    @Query(value = "INSERT INTO bid (lot_name, lot_id, username, user_bid)" +
-            "VALUES (:#{#bid.lotName}, :#{#bid.lotId}, :#{#bid.username}, :#{#bid.userBid})", nativeQuery = true)
-    Integer addBid(@Param("bid") Bid bid);
-
 }

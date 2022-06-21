@@ -32,23 +32,36 @@ public class BidService {
         this.bidValidator = bidValidator;
     }
 
-    public void create(BidDto model) throws ValidationException {
-        bidValidator.validateData(model);
+    public void create(BidDto bidDto) throws ValidationException {
+        bidValidator.validateData(bidDto);
+
+        var bid = convertToBid(bidDto);
+        var optionalLot = lotRepository.findById(bidDto.getLotId());
+        optionalLot.ifPresent(bid::setLot);
 
         synchronized (bidRepository) {
-            bidRepository.addBid(convertToBid(model));
+            bidRepository.save(bid);
         }
 
-        lastBids.put(model.getLotId(), model.getUsername());
+        lastBids.put(bidDto.getLotId(), bidDto.getUsername());
     }
 
     public List<BidDto> findLotBidsById(Long id) {
         List<BidDto> bidDtoList = null;
-        var lot = lotRepository.findById(id);
-        if (lot.isPresent()) {
-            var bids = lot.get().getBids();
-            bidDtoList = convertToBidDtoList(bids);
-            bidDtoList.get(bidDtoList.size()-1).setStartBid(lot.get().getStartBid());
+        var optionalLot = lotRepository.findById(id);
+        if (optionalLot.isPresent()) {
+            var lot = optionalLot.get();
+            var bids = lot.getBids();
+            if (!bids.isEmpty()) {
+                bidDtoList = convertToBidDtoList(bids);
+                bidDtoList.get(bidDtoList.size()-1).setStartBid(lot.getStartBid());
+            } else {
+                bidDtoList = List.of(BidDto.builder()
+                                .lotName(lot.getLotName())
+                                .lotOwner(lot.getLotOwner())
+                                .startBid(lot.getStartBid())
+                                .lotId(lot.getId()).build());
+            }
         }
 
         return bidDtoList;
@@ -69,6 +82,5 @@ public class BidService {
         }
         return bidDtoList;
     }
-
 
 }
