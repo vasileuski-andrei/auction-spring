@@ -1,6 +1,5 @@
 package com.starlight.service;
 
-import com.starlight.service.LotService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;

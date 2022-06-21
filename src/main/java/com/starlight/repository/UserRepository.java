@@ -31,4 +31,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "UPDATE users SET password = :password WHERE username = :username", nativeQuery = true)
     Integer changeUserPasswordByUsername(@Param("username") String username, @Param("password") String password);
 
+    User findByTelegramAccount(String tgAccount);
+
 }

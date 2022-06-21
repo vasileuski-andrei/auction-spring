@@ -1,6 +1,7 @@
 package com.starlight.service;
 
 import com.starlight.dto.LotDto;
+import com.starlight.model.Bid;
 import com.starlight.model.Lot;
 import com.starlight.repository.LotRepository;
 import org.modelmapper.ModelMapper;
@@ -8,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,7 +20,7 @@ import static com.starlight.model.enums.LotStatus.NOT_SOLD;
 import static com.starlight.model.enums.LotStatus.SOLD;
 
 @Service
-public class LotService implements CommonService<LotDto, Integer> {
+public class LotService {
 
     private final ApplicationContext applicationContext;
     private final LotRepository lotRepository;
@@ -35,16 +37,30 @@ public class LotService implements CommonService<LotDto, Integer> {
         this.modelMapper = modelMapper;
     }
 
-    @Override
     public void create(LotDto lotDto) {
         var savedLot = lotRepository.save(convertToLot(lotDto));
         runLotCountdown(savedLot.getId(), lotDto.getSaleTerm());
     }
 
     public List<LotDto> getAllLot() {
-        var allLotsDto = lotRepository.findAllLot();
+        var allLots = lotRepository.findAll();
+        var allLotsDto = convertToLotDtoList(allLots);
         setCurrentSaleTime(allLotsDto);
+        setMaxUserBid(allLots, allLotsDto);
+
         return allLotsDto;
+    }
+
+    private void setMaxUserBid(List<Lot> allLots, List<LotDto> allLotsDto) {
+        for (int i = 0; i < allLots.size(); i++) {
+            var bids = allLots.get(i).getBids();
+            if (!bids.isEmpty()) {
+                var sortedBids = bids.stream().sorted(Comparator.comparing(Bid::getUserBid).reversed()).toList();
+
+                allLotsDto.get(i).setUserBid(sortedBids.get(0).getUserBid());
+                allLotsDto.get(i).setUsername(sortedBids.get(0).getUsername());
+            }
+        }
     }
 
     private void setCurrentSaleTime(List<LotDto> allLotsDto) {
@@ -94,6 +110,14 @@ public class LotService implements CommonService<LotDto, Integer> {
 
     private Lot convertToLot(LotDto lotDto) {
         return modelMapper.map(lotDto, Lot.class);
+    }
+
+    private List<LotDto> convertToLotDtoList(List<Lot> lots) {
+        List<LotDto> lotDtoList = new ArrayList<>();
+        for (Lot lot : lots) {
+            lotDtoList.add(modelMapper.map(lot, LotDto.class));
+        }
+        return lotDtoList;
     }
 
 }

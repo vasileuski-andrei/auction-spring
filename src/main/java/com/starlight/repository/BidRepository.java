@@ -12,10 +12,6 @@ import java.util.List;
 
 public interface BidRepository extends JpaRepository<Bid, Long> {
 
-    @Query("SELECT new com.starlight.dto.BidDto(l.id as lotId, l.lotName, l.lotOwner, l.startBid, b.username, b.userBid) " +
-        "FROM Lot l " +
-        "LEFT JOIN Bid b ON l.id = b.lotId " +
-        "WHERE l.id = :id ORDER BY l.id DESC")
     List<BidDto> findLotBidsById(@Param("id") Long id);
 
     @Modifying
@@ -23,6 +19,5 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
     @Query(value = "INSERT INTO bid (lot_name, lot_id, username, user_bid)" +
             "VALUES (:#{#bid.lotName}, :#{#bid.lotId}, :#{#bid.username}, :#{#bid.userBid})", nativeQuery = true)
     Integer addBid(@Param("bid") Bid bid);
-
 
 }

@@ -21,7 +21,7 @@ import static com.starlight.model.enums.UserStatus.ACTIVE;
 
 @Service
 @PropertySource("classpath:/mail.properties")
-public class UserService implements CommonService<UserDto, Long> {
+public class UserService {
 
     private final PasswordEncoderConfig passwordEncoderConfig;
     private final UserRepository userRepository;
@@ -38,7 +38,6 @@ public class UserService implements CommonService<UserDto, Long> {
         this.mailSenderService = mailSenderService;
     }
 
-    @Override
     public void create(UserDto userDto) throws UserAlreadyExistException {
         if (emailOrUsernameExist(userDto)) {
             throw new UserAlreadyExistException("Account with email " + "\'" + userDto.getEmail() + "\'" +
@@ -105,6 +104,10 @@ public class UserService implements CommonService<UserDto, Long> {
         }
 
         return true;
+    }
+
+    public User getUserByTelegramAccount(String tgAccount) {
+        return userRepository.findByTelegramAccount(tgAccount);
     }
 
     private void sendActivationMessage(User user) {
