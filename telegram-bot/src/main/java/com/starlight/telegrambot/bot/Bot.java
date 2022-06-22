@@ -1,6 +1,6 @@
 package com.starlight.telegrambot.bot;
 
-import com.starlight.telegrambot.dto.UserInfoDto;
+import com.starlight.telegrambot.dto.TelegramDataDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -21,7 +21,7 @@ import java.util.List;
 public class Bot extends TelegramLongPollingBot {
 
     @Autowired
-    private KafkaTemplate<String, UserInfoDto> kafkaTemplate;
+    private KafkaTemplate<String, TelegramDataDto> kafkaTemplate;
 
     private static final String TOPIC_NAME = "auction";
     private Message message = null;
@@ -48,14 +48,17 @@ public class Bot extends TelegramLongPollingBot {
 
         if (messageText.equals("/start")) {
             sendAnswer("Let's go");
-        } else {
+        } else if (messageText.equals("my info") || messageText.equals("my lots") || messageText.equals("all lots")) {
             var listenableFuture = kafkaTemplate.send(TOPIC_NAME, buildUserInfoDto(message));
             listenableFuture.addCallback(System.out::println, System.err::println);
+        } else {
+            sendAnswer("Please enter a valid request.");
         }
+
     }
 
-    private UserInfoDto buildUserInfoDto(Message message) {
-        return UserInfoDto.builder()
+    private TelegramDataDto buildUserInfoDto(Message message) {
+        return TelegramDataDto.builder()
                 .message(message.getText())
                 .telegramAccount(message.getFrom().getUserName())
                 .build();
@@ -91,7 +94,6 @@ public class Bot extends TelegramLongPollingBot {
         keyboardRow.add(new KeyboardButton("all lots"));
         keyboardRowList.add(keyboardRow);
         replyKeyboardMarkup.setKeyboard(keyboardRowList);
-
     }
 
 }

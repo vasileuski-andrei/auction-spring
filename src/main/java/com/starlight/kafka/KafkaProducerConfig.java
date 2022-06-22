@@ -1,7 +1,6 @@
 package com.starlight.kafka;
 
-
-import com.starlight.dto.UserInfoDto;
+import com.starlight.dto.TelegramDataDto;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +12,7 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -30,12 +30,12 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<String, UserInfoDto> producerFactory() {
+    public ProducerFactory<String, List<TelegramDataDto>> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<String, UserInfoDto> kafkaTemplate() {
+    public KafkaTemplate<String, List<TelegramDataDto>> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 

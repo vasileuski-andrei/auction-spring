@@ -1,6 +1,6 @@
 package com.starlight.telegrambot.kafka;
 
-import com.starlight.telegrambot.dto.UserInfoDto;
+import com.starlight.telegrambot.dto.TelegramDataDto;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,12 +29,12 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<String, UserInfoDto> producerFactory() {
+    public ProducerFactory<String, TelegramDataDto> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<String, UserInfoDto> kafkaTemplate() {
+    public KafkaTemplate<String, TelegramDataDto> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 
