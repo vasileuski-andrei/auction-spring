@@ -1,19 +1,23 @@
 package com.starlight.service;
 
 import com.starlight.dto.BidDto;
-import com.starlight.integration.IntegrationTestBase;
-import com.starlight.repository.BidRepository;
+import com.starlight.model.Bid;
+import com.starlight.model.Lot;
+import com.starlight.repository.LotRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
-
 
 @SpringBootTest
 class BidServiceTest {
@@ -24,16 +28,22 @@ class BidServiceTest {
     private BidService bidService;
 
     @Mock
-    private BidRepository bidRepository;
+    private LotRepository lotRepository;
+    @Mock
+    private ModelMapper modelMapper;
 
     @Test
     void listOfLotBidsIsPresentTest() {
-        doReturn(List.of(new BidDto())).when(bidRepository).findLotBidsById(TEST_LOT_ID);
+        var lot = Lot.builder().bids(List.of(new Bid())).build();
+        doReturn(Optional.of(lot)).when(lotRepository).findById(anyLong());
+        doReturn(new BidDto()).when(modelMapper).map(new Bid(), BidDto.class);
 
-        var listBidDto = bidService.findLotBidsById(TEST_LOT_ID);
+        var actual = bidService.findLotBidsById(TEST_LOT_ID);
 
-        assertThat(listBidDto).isNotEmpty();
-        verify(bidRepository).findLotBidsById(TEST_LOT_ID);
+        assertAll(() -> assertThat(actual).isNotEmpty(),
+                  () -> verify(lotRepository).findById(TEST_LOT_ID),
+                  () -> verify(modelMapper).map(new Bid(), BidDto.class));
+
     }
 
 }
