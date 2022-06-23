@@ -35,10 +35,15 @@ public class KafkaService {
     public void receiveMessage(ConsumerRecord<String, TelegramDataDto> consumerRecord) {
         TelegramDataDto telegramDataDto = JSON.parseObject(String.valueOf(consumerRecord.value()), TelegramDataDto.class);
         String telegramMessage = telegramDataDto.getMessage();
+        String telegramAccount = telegramDataDto.getTelegramAccount();
         List<TelegramDataDto> tgDataDtoList = new ArrayList<>();
 
+        if (telegramAccount == null) {
+            telegramAccount = "";
+        }
+
         if (telegramMessage.equals("my info")) {
-            User user = userService.getUserByTelegramAccount(telegramDataDto.getTelegramAccount());
+            User user = userService.getUserByTelegramAccount(telegramAccount);
 
             if (user != null) {
                 var mappedTgDataDto = modelMapper.map(user, TelegramDataDto.class);
@@ -49,13 +54,12 @@ public class KafkaService {
             }
 
         } else if (telegramMessage.equals("my lots")) {
-            User user = userService.getUserByTelegramAccount(telegramDataDto.getTelegramAccount());
+            User user = userService.getUserByTelegramAccount(telegramAccount);
 
             if (user != null) {
                 var userLots = user.getLots();
 
                 if (userLots != null) {
-
                     var telegramDataDtos = convertToTelegramDataDtoList(userLots);
                     telegramDataDtos.get(0).setMessage(telegramDataDto.getMessage());
                     setMaxUserBid(userLots, telegramDataDtos);
