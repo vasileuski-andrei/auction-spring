@@ -58,10 +58,13 @@ public class KafkaService {
                 responseText += String.format("""
                 Lot name: %s
                 Lot owner: %s
-                Start price: %s
+                Start bid: %s
+                Last bid: %s by user %s
                 """, tgDataDto.getLotName(),
                         tgDataDto.getLotOwner(),
-                        tgDataDto.getStartBid() + "\n");
+                        tgDataDto.getStartBid(),
+                        tgDataDto.getUserBid(),
+                        tgDataDto.getUsername() + "\n");
             }
         }
 
