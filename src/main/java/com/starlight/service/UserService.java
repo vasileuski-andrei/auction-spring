@@ -43,14 +43,16 @@ public class UserService {
             throw new UserAlreadyExistException("Account with email " + "\'" + userDto.getEmail() + "\'" +
                     " or username " + "\'" + userDto.getUsername() + "\'" + " is already exist");
         }
+
         User user = convertToUser(userDto);
+        if (userDto.getTelegramAccount().isEmpty()) user.setTelegramAccount(null);
         user.setPassword(encodePassword(user.getPassword()));
         user.setRole(USER);
         user.setUserStatus(ACTIVE);
-        user.setActivationCode(UUID.randomUUID().toString());
+//        user.setActivationCode(UUID.randomUUID().toString());
         userRepository.save(user);
 
-        sendActivationMessage(user);
+//        sendActivationMessage(user);
     }
 
     public void createOAuth2User(OidcIdToken idToken) {

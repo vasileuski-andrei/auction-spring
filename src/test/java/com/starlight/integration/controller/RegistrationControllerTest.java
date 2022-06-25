@@ -7,27 +7,24 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @AutoConfigureMockMvc
 @RequiredArgsConstructor
-class MarketControllerTest extends IntegrationTestBase {
+class RegistrationControllerTest extends IntegrationTestBase {
 
     private final MockMvc mockMvc;
 
     @Test
-    void getMarketPageTest() throws Exception {
-        mockMvc.perform(get("/market"))
+    void getRegistrationPageTest() throws Exception {
+        mockMvc.perform(get("/registration"))
 
-                .andExpect(status().is3xxRedirection());
-    }
+                .andExpectAll(
+                        status().is2xxSuccessful(),
+                        view().name("registration")
+                );
 
-    @Test
-    void addNewLotTest() throws Exception {
-        mockMvc.perform(post("/market"))
-
-                .andExpect(status().is3xxRedirection());
     }
 
 }
