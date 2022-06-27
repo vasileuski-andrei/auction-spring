@@ -1,18 +1,19 @@
 package com.starlight.integration.service;
 
 import com.starlight.dto.LotDto;
-import com.starlight.integration.IntegrationTestBase;
+import com.starlight.TestBase;
+import com.starlight.integration.annotation.IT;
 import com.starlight.service.LotService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@IT
 @RequiredArgsConstructor
-class LotServiceIT extends IntegrationTestBase {
+class LotServiceIT extends TestBase {
 
     private static final Long TEST_LOT_ID = 1L;
     private static final Long TEST_LOT2_ID = 2L;

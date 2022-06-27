@@ -3,12 +3,12 @@ package com.starlight.integration.service;
 import com.starlight.dto.UserDto;
 import com.starlight.exception.UserAlreadyExistException;
 import com.starlight.exception.ValidationException;
-import com.starlight.integration.IntegrationTestBase;
+import com.starlight.TestBase;
+import com.starlight.integration.annotation.IT;
 import com.starlight.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 
@@ -16,8 +16,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.anyString;
 
+@IT
 @RequiredArgsConstructor
-public class UserServiceIT extends IntegrationTestBase {
+public class UserServiceIT extends TestBase {
 
     private static final String TEST_USER3 = "TestUser3";
     private static final String TEST_USER_EMAIL = "test@test.com";

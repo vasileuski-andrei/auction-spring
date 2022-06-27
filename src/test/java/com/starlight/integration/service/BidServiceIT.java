@@ -2,7 +2,8 @@ package com.starlight.integration.service;
 
 import com.starlight.dto.BidDto;
 import com.starlight.exception.ValidationException;
-import com.starlight.integration.IntegrationTestBase;
+import com.starlight.TestBase;
+import com.starlight.integration.annotation.IT;
 import com.starlight.service.BidService;
 import com.starlight.service.LotService;
 import com.starlight.service.LotCountdown;
@@ -16,8 +17,9 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+@IT
 @RequiredArgsConstructor
-public class BidServiceIT extends IntegrationTestBase {
+public class BidServiceIT extends TestBase {
 
     private static final Long TEST_LOT_ID = 1L;
     private static final String TEST_USER = "TestUser2";

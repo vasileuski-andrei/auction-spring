@@ -1,5 +1,6 @@
 package com.starlight.service;
 
+import com.starlight.TestBase;
 import com.starlight.dto.BidDto;
 import com.starlight.model.Bid;
 import com.starlight.model.Lot;
@@ -8,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,8 +19,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
-@SpringBootTest
-class BidServiceTest {
+class BidServiceTest extends TestBase {
 
     private static final Long TEST_LOT_ID = 1L;
 

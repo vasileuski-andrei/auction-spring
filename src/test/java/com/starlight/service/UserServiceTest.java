@@ -1,5 +1,6 @@
 package com.starlight.service;
 
+import com.starlight.TestBase;
 import com.starlight.dto.UserDto;
 import com.starlight.model.User;
 import com.starlight.repository.UserRepository;
@@ -8,13 +9,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-class UserServiceTest {
+class UserServiceTest extends TestBase {
 
     private static final String TEST_USER_EMAIL = "test@test.com";
     private static final String TEST_USER_USERNAME = "TestUser";

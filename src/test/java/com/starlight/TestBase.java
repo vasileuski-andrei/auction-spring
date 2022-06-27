@@ -1,15 +1,15 @@
-package com.starlight.integration;
+package com.starlight;
 
-import com.starlight.integration.annotation.IT;
 import org.junit.jupiter.api.BeforeAll;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
 
-@IT
-@Sql({"classpath:sql/data.sql"})
-public abstract class IntegrationTestBase {
+@ActiveProfiles("test")
+@SpringBootTest
+public abstract class TestBase {
 
     private static final PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:14.1");
 

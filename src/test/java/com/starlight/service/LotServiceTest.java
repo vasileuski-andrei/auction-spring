@@ -1,6 +1,7 @@
 package com.starlight.service;
 
 import com.starlight.dto.LotDto;
+import com.starlight.TestBase;
 import com.starlight.model.Bid;
 import com.starlight.model.Lot;
 import com.starlight.repository.LotRepository;
@@ -17,8 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
-@SpringBootTest
-class LotServiceTest {
+class LotServiceTest extends TestBase {
 
     @InjectMocks
     private LotService lotService;

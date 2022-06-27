@@ -1,6 +1,7 @@
 package com.starlight.integration.controller;
 
-import com.starlight.integration.IntegrationTestBase;
+import com.starlight.TestBase;
+import com.starlight.integration.annotation.IT;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -10,9 +11,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@IT
 @AutoConfigureMockMvc
 @RequiredArgsConstructor
-class MarketControllerTest extends IntegrationTestBase {
+class MarketControllerTest extends TestBase {
 
     private final MockMvc mockMvc;
 
