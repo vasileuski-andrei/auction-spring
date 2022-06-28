@@ -27,11 +27,19 @@ body {
 a {color:#666;}
 
 #content {
-	width:85%;
-	max-width:900px;
-	margin:0 auto 0;
-	display: table;
+	/*width:85%;*/
+	/*max-width:900px;*/
+	/*margin:0 auto 0;*/
+	/*display: table;*/
 
+}
+
+.content-lot {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 20px 0;
 }
 
 table {
@@ -39,7 +47,7 @@ table {
 	border:1px solid #d3d3d3;
 	background:#fefefe;
 	width:100%;
-	margin:5% auto 0;
+	/*margin:5% auto 0;*/
 	-moz-border-radius:5px; /* FF1+ */
 	-webkit-border-radius:5px; /* Saf3-4 */
 	border-radius:5px;
@@ -100,5 +108,9 @@ tr:last-child td.last {
 }
 
 .lot-info {
-	display: table-cell;
+	width: 40%;
+}
+
+.lot-info h2:first-child {
+	margin-top: 0;
 }

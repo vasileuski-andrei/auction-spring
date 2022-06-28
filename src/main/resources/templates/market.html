@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/util.css}"/>
     <link rel="stylesheet" th:href="@{/css/normalize.css}"/>
     <link rel="stylesheet" th:href="@{/css/table-style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/pagination.css}"/>
 </head>
 <body>
 
@@ -21,7 +22,7 @@
 
         <div class="market-first-section">
 
-            <div class="add-new-lot p-t-50 p-b-90">
+            <div class="add-new-lot">
                 <form class="login100-form validate-form flex-sb flex-w" th:method="post" th:action="@{/market/new-lot}" th:object="${lotDto}">
 
                     <div class="wrap-input100 validate-input m-b-16">
@@ -50,45 +51,60 @@
                 </form>
             </div>
 
-            <div id="content">
-                <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>LOT</th>
-                        <th>OWNER</th>
-                        <th>START BID</th>
-                        <th>LAST BID</th>
-                        <th>STATUS</th>
-                        <th>TIME LEFT</th>
-                    </tr>
+            <div class="paginate-container">
 
-                        <tr th:each="lot : ${lots}">
-                            <td th:text="${lot.id}"></td>
-                            <td> <a th:text="${lot.lotName}" th:href="@{/lot/{id}(id=${lot.getId()})}"></a></td>
-                            <td th:text="${lot.lotOwner}"></td>
-                            <td th:text="${lot.startBid} + ' $'"></td>
-                            <td>
-                                <div th:text="${lot.userBid} + ' $'"></div>
-                                <div class="name-of-user-in-last-bid-column" th:text="${lot.username}"></div>
-<!--                                <div class="name-of-user-in-last-bid-column">Name</div>-->
-                            </td>
+                <div class="paginate">
+                    <ul>
+                        <li th:classappend="${lots.number eq 0} ? 'disabled'">
+                            <a th:href="@{/market?page={id}(id=${lots.number - 1})}"><span aria-hidden="true">&laquo;</span></a>
+                        </li>
+                        <li th:classappend="${num eq lots.number + 1} ? 'active'"
+                            th:each="num : ${#numbers.sequence(lots.number + 1, lots.totalPages > 5 + lots.number ? lots.number + 5 : lots.totalPages, 1)}">
+                            <a th:href="@{/market?page={id}(id=${num})}" th:text="${num}" th:title="${'Page '+ num}" rel="tooltip"></a>
+                        </li>
+                        <li th:classappend="${lots.number + 1 eq lots.totalPages} ? 'disabled'">
+                            <a th:href="@{/market?page={id}(id=${lots.number + 1})}"><span aria-hidden="true">&raquo;</span></a>
+                        </li>
+                    </ul>
 
+                </div>
 
-
-
-                            <td th:switch="${lot.statusId}">
-                                <span class="lot-status-sell" th:case="1">SELL</span>
-                                <span class="lot-status-sold" th:case="2">SOLD</span>
-                                <span class= "lot-status-not-sold" th:case="3">NOT SOLD</span>
-                            </td>
-                            <td th:text="${lot.getSaleTerm()}"></td>
-
+                <div id="content">
+                    <table>
+                        <tr>
+                            <th>ID</th>
+                            <th>LOT</th>
+                            <th>OWNER</th>
+                            <th>START BID</th>
+                            <th>LAST BID</th>
+                            <th>STATUS</th>
+                            <th>TIME LEFT</th>
                         </tr>
 
-                </table>
+                            <tr th:each="lot : ${lots}">
+                                <td th:text="${lot.id}"></td>
+                                <td> <a th:text="${lot.lotName}" th:href="@{/lot/{id}(id=${lot.getId()})}"></a></td>
+                                <td th:text="${lot.lotOwner}"></td>
+                                <td th:text="${lot.startBid} + ' $'"></td>
+                                <td>
+                                    <div th:if="${lot.userBid}">
+                                        <div th:text="${lot.userBid} + ' $'"></div>
+                                        <div class="name-of-user-in-last-bid-column" th:text="${lot.username}"></div>
+                                    </div>
+                                </td>
+                                <td th:switch="${lot.statusId}">
+                                    <span class="lot-status-sell" th:case="1">SELL</span>
+                                    <span class="lot-status-sold" th:case="2">SOLD</span>
+                                    <span class= "lot-status-not-sold" th:case="3">NOT SOLD</span>
+                                </td>
+                                <td th:text="${lot.getSaleTerm()}"></td>
+
+                            </tr>
+
+                    </table>
+                </div>
+
             </div>
-
-
 
         </div>
 

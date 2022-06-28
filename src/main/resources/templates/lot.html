@@ -22,7 +22,7 @@
 
         <div class="first-section">
 
-            <div id="content" th:with="lot=${lotBids.get(lotBids.size()-1)}">
+            <div class="content-lot" th:with="lot=${lotBids.get(lotBids.size()-1)}">
                 <div class="lot-info">
                     <h2>Lot name: <span th:text="${lot.getLotName()}"></span></h2>
                     <h2>Lot owner: <span th:text="${lot.getLotOwner()}"></span></h2>
@@ -65,7 +65,6 @@
                         <span class="unsuccess-alert-message" th:if="${er}" role="alert" th:text="${errorMessage}"></span>
 
                     </form>
-
 
                 </div>
 
