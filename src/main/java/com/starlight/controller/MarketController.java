@@ -3,6 +3,9 @@ package com.starlight.controller;
 import com.starlight.dto.LotDto;
 import com.starlight.service.LotService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -13,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/market")
@@ -27,9 +29,9 @@ public class MarketController {
     }
 
     @GetMapping
-    public String getMarketPage(@ModelAttribute("lotDto") LotDto lotDto, Model model) {
-        List<LotDto> lots = lotService.getAllLot();
-        model.addAttribute("lots", lots);
+    public String getMarketPage(@ModelAttribute("lotDto") LotDto lotDto, Model model,
+                                @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+        model.addAttribute("lots", lotService.getAllLot(pageable));
         return "market";
     }
 

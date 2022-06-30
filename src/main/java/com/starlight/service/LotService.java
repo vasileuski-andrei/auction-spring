@@ -4,9 +4,11 @@ import com.starlight.dto.LotDto;
 import com.starlight.model.Bid;
 import com.starlight.model.Lot;
 import com.starlight.repository.LotRepository;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
@@ -20,6 +22,7 @@ import static com.starlight.model.enums.LotStatus.NOT_SOLD;
 import static com.starlight.model.enums.LotStatus.SOLD;
 
 @Service
+@RequiredArgsConstructor
 public class LotService {
 
     private final ApplicationContext applicationContext;
@@ -30,20 +33,20 @@ public class LotService {
     private final Map<Integer, String> lastBids = new ConcurrentHashMap<>();
     private final Map<Long, LotCountdown> lotCountdown = new ConcurrentHashMap<>();
 
-    @Autowired
-    public LotService(ApplicationContext applicationContext, UserService userService,LotRepository lotRepository, ModelMapper modelMapper, BidService bidService) {
-        this.applicationContext = applicationContext;
-        this.userService = userService;
-        this.lotRepository = lotRepository;
-        this.bidService = bidService;
-        this.modelMapper = modelMapper;
-    }
-
     public void create(LotDto lotDto) {
         var lot = convertToLot(lotDto);
         lot.setUser(userService.getUserByUsername(lotDto.getLotOwner()));
         var savedLot = lotRepository.save(lot);
         runLotCountdown(savedLot.getId(), lotDto.getSaleTerm());
+    }
+
+    public Page<LotDto> getAllLot(Pageable pageable) {
+        var allLots = lotRepository.findAll(pageable);
+        var allLotsDto = allLots.map(this::convertToLotDto);
+        setCurrentSaleTime(allLotsDto.getContent());
+        setMaxUserBid(allLots.getContent(), allLotsDto.getContent());
+
+        return allLotsDto;
     }
 
     public List<LotDto> getAllLot() {
@@ -114,6 +117,10 @@ public class LotService {
 
     private Lot convertToLot(LotDto lotDto) {
         return modelMapper.map(lotDto, Lot.class);
+    }
+
+    private LotDto convertToLotDto(Lot lot) {
+        return modelMapper.map(lot, LotDto.class);
     }
 
     private List<LotDto> convertToLotDtoList(List<Lot> lots) {
