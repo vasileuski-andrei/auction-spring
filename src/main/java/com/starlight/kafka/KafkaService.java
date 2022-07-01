@@ -59,7 +59,7 @@ public class KafkaService {
             if (user != null) {
                 var userLots = user.getLots();
 
-                if (userLots != null) {
+                if (!userLots.isEmpty()) {
                     var telegramDataDtos = convertToTelegramDataDtoList(userLots);
                     telegramDataDtos.get(0).setMessage(telegramDataDto.getMessage());
                     setMaxUserBid(userLots, telegramDataDtos);
@@ -76,7 +76,6 @@ public class KafkaService {
             var telegramDataDtos = convertToTelegramDataDtoList(allLotDto);
             telegramDataDtos.get(0).setMessage(telegramDataDto.getMessage());
             tgDataDtoList.addAll(telegramDataDtos);
-
         }
 
         sendMessage(tgDataDtoList);
@@ -84,7 +83,7 @@ public class KafkaService {
 
     private void createTelegramDataDto(List<TelegramDataDto> tgDataDtoList, String errorMessage) {
         tgDataDtoList.add(TelegramDataDto.builder()
-                .errorMessage("Your telegram account isn't valid.")
+                .errorMessage(errorMessage)
                 .build());
     }
 
