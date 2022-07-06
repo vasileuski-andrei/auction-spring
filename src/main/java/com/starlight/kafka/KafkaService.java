@@ -8,6 +8,7 @@ import com.starlight.model.User;
 import com.starlight.service.LotService;
 import com.starlight.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.modelmapper.ModelMapper;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+@Slf4j
 @EnableKafka
 @Component
 @AllArgsConstructor
@@ -34,9 +36,11 @@ public class KafkaService {
     @KafkaListener(topics = "auction")
     public void receiveMessage(ConsumerRecord<String, TelegramDataDto> consumerRecord) {
         TelegramDataDto telegramDataDto = JSON.parseObject(String.valueOf(consumerRecord.value()), TelegramDataDto.class);
+
         String telegramMessage = telegramDataDto.getMessage();
         String telegramAccount = telegramDataDto.getTelegramAccount();
         List<TelegramDataDto> tgDataDtoList = new ArrayList<>();
+        log.info("Auction got the tg-bot message: " + telegramDataDto.toString());
 
         if (telegramAccount == null) {
             telegramAccount = "";

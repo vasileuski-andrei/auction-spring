@@ -2,6 +2,7 @@ package com.starlight.controller;
 
 import com.starlight.dto.LotDto;
 import com.starlight.service.LotService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.security.Principal;
 
+@Slf4j
 @Controller
 @RequestMapping("/market")
 public class MarketController {
@@ -32,6 +34,7 @@ public class MarketController {
     public String getMarketPage(@ModelAttribute("lotDto") LotDto lotDto, Model model,
                                 @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         model.addAttribute("lots", lotService.getAllLot(pageable));
+        log.info("Open market page and get all lots");
         return "market";
     }
 
@@ -39,6 +42,7 @@ public class MarketController {
     public String addNewLot(@ModelAttribute("lotDto") @Valid LotDto lotDto, Errors errors, Principal principal) {
 
         if (errors.hasErrors()) {
+            log.info("Error" + errors.getAllErrors());
             return "market";
         }
 
@@ -46,6 +50,7 @@ public class MarketController {
         lotDto.setStatusId(1);
 
         lotService.create(lotDto);
+        log.info("Lot " + lotDto.getLotName() + " created");
         return "redirect:/market";
     }
 

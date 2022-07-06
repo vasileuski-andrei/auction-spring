@@ -3,6 +3,7 @@ package com.starlight.controller;
 import com.starlight.dto.BidDto;
 import com.starlight.exception.ValidationException;
 import com.starlight.service.BidService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/lot")
 public class LotController {
@@ -31,6 +33,7 @@ public class LotController {
     public String getLotPage(@PathVariable("id") Long id, Model model) {
         List<BidDto> lotBids= bidService.findLotBidsById(id);
         if (lotBids != null) {
+            log.info("Lot bids isn't null");
             var lastBidDto = lotBids.get(lotBids.size()-1);
 
             lotName = lastBidDto.getLotName();
@@ -40,6 +43,7 @@ public class LotController {
             lastUser = lastBidDto.getUsername();
 
             model.addAttribute("lotBids", lotBids);
+            log.info("Get all lot bids");
         }
 
         return "lot";
@@ -60,11 +64,11 @@ public class LotController {
                 .lastUser(lastUser)
                 .build();
 
-        System.out.println();
-
         try {
             bidService.create(bidDto);
+            log.info("Bid for lot created");
         } catch (ValidationException e) {
+            log.info("ValidationException" + e.getDetail());
             model.addAttribute("errorMessage", e.getDetail());
         }
 

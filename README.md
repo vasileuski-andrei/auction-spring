@@ -5,7 +5,7 @@ Bot provides to get the information about the account and number of lots.
 Technologies - Java17, Spring(Boot, MVC, Data JPA, Security), Kafka, Docker, PostgresQL, Thymeleaf, Gradle, JUnit, Mockito, AssertJ, Lombok, Liquibase
 
 Functionality - registration account(auth with google - OAuth2), login, email account activation, security(roles and permissions), 
-place a bid, delete account, change password, captcha, db migration, unit and integration tests in testcontainers. TG bot as an isolated microservice.
+place a bid, delete account, change password, captcha, db migration, unit and integration tests in testcontainers, logging, TG bot.
 
 Аукцион - это spring веб приложение, которое позволяет размещать товары на продажу и принимать участие в торгах по правилам аукциона. 
 Аукцион имеет телеграм бота, который представлен отдельным микросервисом. Сообщение между веб аукционом и ботом осуществляется с помощью kafka. 
