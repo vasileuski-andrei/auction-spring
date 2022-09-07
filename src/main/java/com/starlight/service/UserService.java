@@ -40,12 +40,16 @@ public class UserService {
 
     public void create(UserDto userDto) throws UserAlreadyExistException {
         if (emailOrUsernameExist(userDto)) {
-            throw new UserAlreadyExistException("Account with email " + "\'" + userDto.getEmail() + "\'" +
-                    " or username " + "\'" + userDto.getUsername() + "\'" + " is already exist");
+            String errorMessage = String.format("""
+                    Account with email %s or username %s is already exist
+                    """, userDto.getEmail(), userDto.getUsername());
+            throw new UserAlreadyExistException(errorMessage);
         }
 
         User user = convertToUser(userDto);
-        if (userDto.getTelegramAccount().isEmpty()) user.setTelegramAccount(null);
+        if (userDto.getTelegramAccount().isEmpty()) {
+            user.setTelegramAccount(null);
+        }
         user.setPassword(encodePassword(user.getPassword()));
         user.setRole(USER);
         user.setUserStatus(ACTIVE);
