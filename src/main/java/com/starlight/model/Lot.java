@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -28,6 +30,7 @@ public class Lot {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Fetch(value = FetchMode.SUBSELECT)
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "lot_id")
     private List<Bid> bids;
