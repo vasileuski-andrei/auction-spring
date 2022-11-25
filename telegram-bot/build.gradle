@@ -22,7 +22,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.telegram:telegrambots:6.0.1'
     implementation 'org.telegram:telegrambotsextensions:6.0.1'
-    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.springframework.kafka:spring-kafka:2.9.0'
     implementation 'com.alibaba:fastjson:2.0.7'
 
     compileOnly 'org.projectlombok:lombok'

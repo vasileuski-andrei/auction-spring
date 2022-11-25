@@ -34,7 +34,7 @@ public class User {
     private String activationCode;
     private String telegramAccount;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private List<Lot> lots;
 

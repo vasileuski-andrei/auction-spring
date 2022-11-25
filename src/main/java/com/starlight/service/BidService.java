@@ -25,7 +25,7 @@ public class BidService {
     private final BidValidator bidValidator;
 
     @Autowired
-    public BidService(BidRepository bidRepository, LotRepository lotRepository,ModelMapper modelMapper, BidValidator bidValidator) {
+    public BidService(BidRepository bidRepository, LotRepository lotRepository, ModelMapper modelMapper, BidValidator bidValidator) {
         this.lotRepository = lotRepository;
         this.bidRepository = bidRepository;
         this.modelMapper = modelMapper;
