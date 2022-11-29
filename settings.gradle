@@ -1,1 +1,4 @@
 rootProject.name = 'auction-spring'
+
+includeBuild 'auction'
+includeBuild 'telegram-bot'
