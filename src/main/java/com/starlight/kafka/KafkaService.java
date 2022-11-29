@@ -76,7 +76,7 @@ public class KafkaService {
                 createTelegramDataDto(tgDataDtoList, "Your telegram account isn't valid");
             }
         } else if (telegramMessage.equals("all lots")) {
-            var allLotDto = lotService.getAllLot();
+            var allLotDto = lotService.getAll();
             var telegramDataDtos = convertToTelegramDataDtoList(allLotDto);
             telegramDataDtos.get(0).setMessage(telegramDataDto.getMessage());
             tgDataDtoList.addAll(telegramDataDtos);

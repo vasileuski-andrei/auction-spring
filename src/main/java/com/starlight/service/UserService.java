@@ -21,7 +21,7 @@ import static com.starlight.model.enums.UserStatus.ACTIVE;
 
 @Service
 @PropertySource("classpath:/mail.properties")
-public class UserService {
+public class UserService implements CommonService<UserDto>{
 
     private final PasswordEncoderConfig passwordEncoderConfig;
     private final UserRepository userRepository;
@@ -38,6 +38,7 @@ public class UserService {
         this.mailSenderService = mailSenderService;
     }
 
+    @Override
     public void create(UserDto userDto) throws UserAlreadyExistException {
         if (emailOrUsernameExist(userDto)) {
             String errorMessage = String.format("""

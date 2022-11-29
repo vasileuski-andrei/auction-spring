@@ -50,7 +50,7 @@ class LotServiceIT extends TestBase {
 
     @Test
     void lotsArePresentTest() {
-        var actual = lotService.getAllLot();
+        var actual = lotService.getAll();
 
         assertThat(actual).isNotEmpty();
     }

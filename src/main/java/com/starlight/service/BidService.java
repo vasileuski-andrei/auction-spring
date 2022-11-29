@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-public class BidService {
+public class BidService implements CommonService<BidDto> {
 
     private final BidRepository bidRepository;
     private final LotRepository lotRepository;
@@ -32,6 +32,7 @@ public class BidService {
         this.bidValidator = bidValidator;
     }
 
+    @Override
     public void create(BidDto bidDto) throws ValidationException {
         bidValidator.validateData(bidDto);
 

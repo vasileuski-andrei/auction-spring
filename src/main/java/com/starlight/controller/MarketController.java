@@ -33,7 +33,7 @@ public class MarketController {
     @GetMapping
     public String getMarketPage(@ModelAttribute("lotDto") LotDto lotDto, Model model,
                                 @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        model.addAttribute("lots", lotService.getAllLot(pageable));
+        model.addAttribute("lots", lotService.getAll(pageable));
         log.info("Open market page and get all lots");
         return "market";
     }

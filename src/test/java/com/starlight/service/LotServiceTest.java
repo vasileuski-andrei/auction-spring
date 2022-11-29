@@ -34,7 +34,7 @@ class LotServiceTest extends TestBase {
         doReturn(List.of(lot)).when(lotRepository).findAll();
         doReturn(new LotDto()).when(modelMapper).map(lot, LotDto.class);
 
-        var actual = lotService.getAllLot().size();
+        var actual = lotService.getAll().size();
 
         assertAll(() -> assertThat(actual).isGreaterThan(0),
                 () -> verify(lotRepository).findAll(),

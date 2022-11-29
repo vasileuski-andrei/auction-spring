@@ -23,7 +23,7 @@ import static com.starlight.model.enums.LotStatus.SOLD;
 
 @Service
 @RequiredArgsConstructor
-public class LotService {
+public class LotService implements CommonService<LotDto> {
 
     private final ApplicationContext applicationContext;
     private final UserService userService;
@@ -33,6 +33,7 @@ public class LotService {
     private final Map<Integer, String> lastBids = new ConcurrentHashMap<>();
     private final Map<Long, LotCountdown> lotCountdown = new ConcurrentHashMap<>();
 
+    @Override
     public void create(LotDto lotDto) {
         var lot = convertToLot(lotDto);
         lot.setUser(userService.getUserByUsername(lotDto.getLotOwner()));
@@ -40,7 +41,7 @@ public class LotService {
         runLotCountdown(savedLot.getId(), lotDto.getSaleTerm());
     }
 
-    public Page<LotDto> getAllLot(Pageable pageable) {
+    public Page<LotDto> getAll(Pageable pageable) {
         var allLots = lotRepository.findAll(pageable);
         var allLotsDto = allLots.map(this::convertToLotDto);
         setCurrentSaleTime(allLotsDto.getContent());
@@ -49,7 +50,7 @@ public class LotService {
         return allLotsDto;
     }
 
-    public List<LotDto> getAllLot() {
+    public List<LotDto> getAll() {
         var allLots = lotRepository.findAll();
         var allLotsDto = convertToLotDtoList(allLots);
         setCurrentSaleTime(allLotsDto);
