@@ -1,6 +1,9 @@
+server:
+  port: 8080
+
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/auction-db
+    url: jdbc:postgresql://host.docker.internal:5433/auction-db
     username: postgres
     password: pass
     driver-class-name: org.postgresql.Driver
@@ -22,7 +25,7 @@ spring:
   kafka:
     consumer:
       group-id: 1
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: host.docker.internal:9092
 
 recaptcha:
   secret: 6LdsY0kfAAAAAEJcCEOy1WFWBBEtgN9xbWtQYlWd

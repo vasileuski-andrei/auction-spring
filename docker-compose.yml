@@ -1,0 +1,47 @@
+version: '3.1'
+
+services:
+  auction-spring:
+    restart: always
+    container_name: auction
+    ports:
+        - "8080:8080"
+    depends_on:
+      - auction-db
+      - kafka
+    build:
+      context: ./auction
+  telegram-bot:
+    restart: always
+    container_name: tg-bot
+    depends_on:
+      - auction-spring
+    build:
+      context: ./telegram-bot
+  auction-db:
+    image: postgres
+    restart: always
+    container_name: auction-db
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: auction-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
